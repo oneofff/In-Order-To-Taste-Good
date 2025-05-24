@@ -8,8 +8,9 @@ public class SeeYouScreen {
     public static void print() {
 
         try {
-            ScreenUtils.printBox(List.of("See you next time!",
+            ScreenUtils.printBox(List.of(
                     "Thank you for your order!",
+                    "See you next time!",
                     "Goodbye!"));
             Thread.sleep(5000);
         } catch (InterruptedException e) {

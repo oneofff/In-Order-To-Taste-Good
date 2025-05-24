@@ -28,9 +28,9 @@ public final class ScreenUtils {
 
 
     private static String buildBorder() {
-        return "+" +
-                "=".repeat(DEFAULT_BORDER_LENGTH - 2) +
-                "+";
+        return "!" +
+                "@".repeat(DEFAULT_BORDER_LENGTH - 2) +
+                "!";
     }
 
     private static void printEmptyLinesOnBottom(int amountOfEmptyLines) {

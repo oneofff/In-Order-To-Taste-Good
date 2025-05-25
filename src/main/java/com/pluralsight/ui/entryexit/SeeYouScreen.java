@@ -9,7 +9,7 @@ public class SeeYouScreen {
 
         try {
             ScreenUtils.printBox(List.of(
-                    "Thank you for your order!",
+                    "Thank you for choosing us!",
                     "See you next time!",
                     "Goodbye!"));
             Thread.sleep(5000);

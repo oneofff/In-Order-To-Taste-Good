@@ -3,7 +3,6 @@ package com.pluralsight.ui.menu;
 import com.pluralsight.service.AppCoordinator;
 import com.pluralsight.ui.forms.AddChipsScreen;
 import com.pluralsight.ui.forms.AddDrinkScreen;
-import com.pluralsight.ui.forms.AddSandwichScreen;
 import com.pluralsight.ui.view.OrderSummary;
 import com.pluralsight.utils.console.ScreenUtils;
 import lombok.AllArgsConstructor;
@@ -29,7 +28,7 @@ public class OrderScreenMenu {
     @Getter
     @AllArgsConstructor
     public enum MenuOption implements MenuEntry {
-        ADD_SANDWICH(1, "Add sandwich", AddSandwichScreen::addSandwich),
+        ADD_SANDWICH(1, "Add sandwich", AppCoordinator::addSandwichFlow),
         ADD_DRINKS(2, "Add drinks", AddDrinkScreen::addDrink),
         ADD_CHIPS(3, "Add chips", AddChipsScreen::addChips),
         CHECKOUT(4, "Checkout", OrderSummary::mock),

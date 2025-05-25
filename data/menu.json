@@ -1,5 +1,28 @@
 {
-  "sandwichSizePrices": {
+  "signatureSandwiches": [
+    {
+      "name": "BLT",
+      "ingredients": [
+        "bacon",
+        "lettuce",
+        "tomato"
+      ],
+      "basePrice": 11.0
+    },
+    {
+      "name": "Philly Cheese Steak",
+      "ingredients": [
+        "8\" white bread",
+        "Steak",
+        "American cheese",
+        "Peppers",
+        "Mayo",
+        "Toasted"
+      ],
+      "basePrice": 9.0
+    }
+  ],
+  "customSandwichSizePrices": {
     "4inch": 5.5,
     "8inch": 7.0,
     "12inch": 8.5
@@ -9,6 +32,11 @@
     "wheat",
     "rye",
     "wrap"
+  ],
+  "sandwichAvailableModificationTypes": [
+    "PremiumToppings",
+    "RegularToppings",
+    "Sauces"
   ],
   "toppings": [
     {

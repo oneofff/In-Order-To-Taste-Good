@@ -2,8 +2,8 @@ package com.pluralsight.ui.forms;
 
 import com.pluralsight.repository.IMenuRepository;
 import com.pluralsight.repository.MenuRepository;
+import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
-import com.pluralsight.utils.console.ConversionUtils;
 import com.pluralsight.utils.console.ScreenUtils;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class AddCustomSandwichScreen {
 
     private int selectModification() {
         ScreenUtils.printOnCenterOfTheScreen("Please select your modifications");
-        ScreenUtils.printBox(ConversionUtils.listToIndexedList(menuRepository.getSandwichAvailableModificationTypes()));
+        ScreenUtils.printBox(CollectionFormatter.listToIndexedList(menuRepository.getSandwichAvailableModificationTypes()));
         int modificationType = ConsoleStringReader.getIntInRangeWithMargin(1, 5);
         ScreenUtils.cls();
         return modificationType;
@@ -54,7 +54,7 @@ public class AddCustomSandwichScreen {
 
     private int selectBreadType() {
         ScreenUtils.printOnCenterOfTheScreen("Please select your bread");
-        ScreenUtils.printBox(ConversionUtils.listToIndexedList(menuRepository.getBreadOptions()));
+        ScreenUtils.printBox(CollectionFormatter.listToIndexedList(menuRepository.getBreadOptions()));
         int breadType = ConsoleStringReader.getIntInRangeWithMargin(1, 5);
         ScreenUtils.cls();
         return breadType;
@@ -62,7 +62,7 @@ public class AddCustomSandwichScreen {
 
     private String selectSandwichSize() {
         ScreenUtils.printOnCenterOfTheScreen("Please select sandwich size: ");
-        List<String> toDisplay = ConversionUtils.mapToIndexedList(menuRepository.getSandwichSizes());
+        List<String> toDisplay = CollectionFormatter.mapToIndexedList(menuRepository.getSandwichSizes());
         ScreenUtils.printBox(toDisplay);
         int size = ConsoleStringReader.getIntInRangeWithMargin(1, 3);
         String sizeName = menuRepository.getSandwichSizes().keySet().toArray()[size - 1].toString();

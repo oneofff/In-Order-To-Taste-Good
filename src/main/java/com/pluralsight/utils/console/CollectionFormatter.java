@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ConversionUtils {
+public class CollectionFormatter {
 
     public static <T, L> List<String> mapToIndexedList(Map<T, L> sizes) {
         List<String> out = new ArrayList<>();

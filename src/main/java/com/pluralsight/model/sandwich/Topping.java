@@ -2,16 +2,19 @@ package com.pluralsight.model.sandwich;
 
 import lombok.Data;
 
+import java.util.Map;
+
 @Data
-public abstract class Topping {
+public class Topping {
+
     private String name;
+    private Map<String, Double> price;
 
-
-    public Topping(String name) {
-        this.name = name;
+    public String getDescription() {
+        return name;
     }
 
-    public abstract String getDescription();
-
-    public abstract double getPrice();
+    public double getPrice(String size) {
+        return price.get(size);
+    }
 }

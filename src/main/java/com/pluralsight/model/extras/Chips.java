@@ -1,16 +1,15 @@
 package com.pluralsight.model.extras;
 
 import com.pluralsight.model.order.OrderItem;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class Chips extends OrderItem {
 
-    private final String name;
-    private final double price;
-
-    public Chips(String name, double price) {
-        this.name = name;
-        this.price = price;
-    }
+    private String name;
+    private double price;
 
     @Override
     public String getDescription() {

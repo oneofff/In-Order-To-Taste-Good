@@ -1,0 +1,93 @@
+{
+  "sandwichSizePrices": {
+    "4inch": 5.5,
+    "8inch": 7.0,
+    "12inch": 8.5
+  },
+  "breadOptions": [
+    "white",
+    "wheat",
+    "rye",
+    "wrap"
+  ],
+  "toppings": [
+    {
+      "name": "meats",
+      "price": {
+        "4inch": 1.0,
+        "8inch": 2.0,
+        "12inch": 3.0
+      }
+    },
+    {
+      "name": "extraMeat",
+      "price": {
+        "4inch": 0.5,
+        "8inch": 1.0,
+        "12inch": 1.5
+      }
+    },
+    {
+      "name": "cheese",
+      "price": {
+        "4inch": 0.75,
+        "8inch": 1.5,
+        "12inch": 2.25
+      }
+    },
+    {
+      "name": "extraCheese",
+      "price": {
+        "4inch": 0.3,
+        "8inch": 0.6,
+        "12inch": 0.9
+      }
+    }
+  ],
+  "drinkOptions": [
+    {
+      "name": "small",
+      "price": 2.0
+    },
+    {
+      "name": "medium",
+      "price": 2.5
+    },
+    {
+      "name": "large",
+      "price": 3.0
+    }
+  ],
+  "sauces": [
+    {
+      "name": "mayo",
+      "price": 0.0
+    },
+    {
+      "name": "mustard",
+      "price": 0.0
+    },
+    {
+      "name": "ketchup",
+      "price": 0.0
+    },
+    {
+      "name": "ranch",
+      "price": 0.0
+    },
+    {
+      "name": "thousand islands",
+      "price": 0.0
+    },
+    {
+      "name": "vinaigrette",
+      "price": 0.0
+    }
+  ],
+  "chipsOptions": [
+    {
+      "name": "regular",
+      "price": 1.5
+    }
+  ]
+}

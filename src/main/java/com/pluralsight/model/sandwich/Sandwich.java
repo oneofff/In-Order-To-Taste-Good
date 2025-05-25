@@ -3,7 +3,6 @@ package com.pluralsight.model.sandwich;
 import com.pluralsight.model.order.OrderItem;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
@@ -11,14 +10,14 @@ import java.util.List;
 @Data
 public abstract class Sandwich extends OrderItem {
 
-    private Size size;
-    private BreadType breadType;
+    private UnitPrice unitPrice;
+    private String breadType;
     private boolean toasted;
     private List<Topping> toppings;
 
     @Override
     public String getDescription() {
-        return "Sandwich with " + size + " size, " + breadType + " bread, " +
+        return "Sandwich with " + unitPrice.getSize() + " size, " + breadType + " bread, " +
                 (toasted ? "toasted" : "not toasted") + ", and toppings: " + toppings;
     }
 
@@ -29,23 +28,11 @@ public abstract class Sandwich extends OrderItem {
 
     private double calculateToppingPrice() {
         return toppings.stream()
-                .mapToDouble(Topping::getPrice)
+                .mapToDouble(topping -> topping.getPrice(unitPrice.getSize()))
                 .sum();
     }
 
     private double calculateBasePrice() {
-        return size.basePrice;
-    }
-
-    @RequiredArgsConstructor
-    private enum Size {
-        SMALL(5.50), MEDIUM(7.00), LARGE(8.50);
-
-        private final double basePrice;
-
-    }
-
-    private enum BreadType {
-        WHITE, WHEAT, RYE, WRAP
+        return unitPrice.getPrice();
     }
 }

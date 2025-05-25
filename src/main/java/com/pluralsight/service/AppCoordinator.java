@@ -1,5 +1,7 @@
 package com.pluralsight.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pluralsight.model.menu.Menu;
 import com.pluralsight.ui.entryexit.SeeYouScreen;
 import com.pluralsight.ui.entryexit.WelcomeScreen;
 import com.pluralsight.ui.menu.HomeScreenMenu;
@@ -7,13 +9,32 @@ import com.pluralsight.ui.menu.MenuEntry;
 import com.pluralsight.ui.menu.OrderScreenMenu;
 import com.pluralsight.utils.console.ScreenUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class AppCoordinator {
 
     public static void start() {
+        Menu menu = loadMenu("data/menu.json");
+        System.out.println(menu.getBreadOptions());
+        System.out.println(menu.getSandwichSizePrices());
+        System.out.println(menu.getToppings());
+        System.out.println(menu.getSauces());
+        System.out.println(menu.getDrinkOptions());
+        System.out.println(menu.getChipsOptions());
+
         WelcomeScreen.print();
         homeScreenFlow();
+    }
+
+    public static Menu loadMenu(String jsonPath) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(new File(jsonPath), Menu.class);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load menu data", e);
+        }
     }
 
     public static void homeScreenFlow() {

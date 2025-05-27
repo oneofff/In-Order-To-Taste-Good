@@ -2,7 +2,7 @@ package com.pluralsight.service;
 
 import com.pluralsight.ui.entryexit.SeeYouScreen;
 import com.pluralsight.ui.entryexit.WelcomeScreen;
-import com.pluralsight.ui.menu.AddSandwichMenu;
+import com.pluralsight.ui.menu.AddSandwichScreenMenu;
 import com.pluralsight.ui.menu.HomeScreenMenu;
 import com.pluralsight.ui.menu.MenuEntry;
 import com.pluralsight.ui.menu.OrderScreenMenu;
@@ -35,9 +35,9 @@ public class AppCoordinator {
 
     public static void addSandwichFlow() {
         while (true) {
-            AddSandwichMenu.print();
-            int option = ScreenUtils.askForMenuOptionsInput(AddSandwichMenu.amountOfOptions());
-            performAction(option, AddSandwichMenu.MenuOption.class);
+            AddSandwichScreenMenu.print();
+            int option = ScreenUtils.askForMenuOptionsInput(AddSandwichScreenMenu.amountOfOptions());
+            performAction(option, AddSandwichScreenMenu.MenuOption.class);
         }
     }
 
@@ -52,7 +52,6 @@ public class AppCoordinator {
         } else {
             System.out.println("Invalid option. Please try again.");
         }
-        ScreenUtils.waitTillPressEnter();
         ScreenUtils.cls();
     }
 

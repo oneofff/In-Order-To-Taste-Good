@@ -2,8 +2,8 @@ package com.pluralsight.ui.menu;
 
 import com.pluralsight.service.AppCoordinator;
 import com.pluralsight.utils.console.ScreenUtils;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class HomeScreenMenu {
     }
 
     @Getter
-    @AllArgsConstructor
+    @RequiredArgsConstructor
     public enum MenuOption implements MenuEntry {
         NEW_ORDER(1, "New order", AppCoordinator::orderScreenFlow),
         EXIT(0, "Exit", AppCoordinator::exit);

@@ -28,48 +28,90 @@
     "12inch": 8.5
   },
   "breadOptions": [
-    "white",
-    "wheat",
-    "rye",
-    "wrap"
+    "White",
+    "Wheat",
+    "Rye",
+    "Wrap"
   ],
   "sandwichAvailableModificationTypes": [
     "PremiumToppings",
     "RegularToppings",
     "Sauces"
   ],
-  "toppings": [
+  "premiumToppings": [
     {
-      "name": "meats",
-      "price": {
+      "name": "Meats",
+      "types": [
+        "Steak",
+        "Ham",
+        "Salami",
+        "Roast beef",
+        "Chicken",
+        "Bacon"
+      ],
+      "basePricesBySize": {
         "4inch": 1.0,
         "8inch": 2.0,
         "12inch": 3.0
-      }
-    },
-    {
-      "name": "extraMeat",
-      "price": {
+      },
+      "extraPricesBySize": {
         "4inch": 0.5,
         "8inch": 1.0,
         "12inch": 1.5
       }
     },
     {
-      "name": "cheese",
-      "price": {
+      "name": "Cheese",
+      "types": [
+        "American",
+        "Provolone",
+        "Cheddar",
+        "Swiss"
+      ],
+      "basePricesBySize": {
         "4inch": 0.75,
         "8inch": 1.5,
         "12inch": 2.25
-      }
-    },
-    {
-      "name": "extraCheese",
-      "price": {
+      },
+      "extraPricesBySize": {
         "4inch": 0.3,
         "8inch": 0.6,
         "12inch": 0.9
       }
+    }
+  ],
+  "regularToppings": [
+    {
+      "name": "Lettuce",
+      "price": 0.0
+    },
+    {
+      "name": "Tomato",
+      "price": 0.0
+    },
+    {
+      "name": "Onion",
+      "price": 0.0
+    },
+    {
+      "name": "Pickles",
+      "price": 0.0
+    },
+    {
+      "name": "Jalapeños",
+      "price": 0.0
+    },
+    {
+      "name": "Cucumbers",
+      "price": 0.0
+    },
+    {
+      "name": "Mushrooms",
+      "price": 0.0
+    },
+    {
+      "name": "Guacamole",
+      "price": 0.0
     }
   ],
   "drinkOptions": [

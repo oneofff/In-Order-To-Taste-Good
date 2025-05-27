@@ -2,8 +2,9 @@ package com.pluralsight.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pluralsight.model.menu.Menu;
+import com.pluralsight.model.sandwich.PremiumTopping;
+import com.pluralsight.model.sandwich.RegularTopping;
 import com.pluralsight.model.sandwich.SignatureSandwich;
-import com.pluralsight.model.sandwich.Topping;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,8 +44,8 @@ public class MenuRepository implements IMenuRepository {
     }
 
     @Override
-    public List<Topping> getToppings() {
-        return menu.getToppings();
+    public List<PremiumTopping> getPremiumToppings() {
+        return menu.getPremiumToppings();
     }
 
     @Override
@@ -55,6 +56,11 @@ public class MenuRepository implements IMenuRepository {
     @Override
     public List<String> getSandwichAvailableModificationTypes() {
         return menu.getSandwichAvailableModificationTypes();
+    }
+
+    @Override
+    public List<RegularTopping> getRegularToppings() {
+        return menu.getRegularToppings();
     }
 
     public Menu loadMenu(String jsonPath) {

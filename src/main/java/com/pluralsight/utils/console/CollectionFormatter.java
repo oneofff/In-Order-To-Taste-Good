@@ -3,6 +3,8 @@ package com.pluralsight.utils.console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class CollectionFormatter {
 
@@ -15,12 +17,29 @@ public class CollectionFormatter {
         return out;
     }
 
-    public static <T> List<String> listToIndexedList(List<T> list) {
+    private static <T> List<String> listToIndexedList(List<T> list) {
         List<String> out = new ArrayList<>();
         int i = 1;
         for (T e : list) {
             out.add(String.format("%d. %s", i++, e));
         }
+
         return out;
+    }
+
+    public static <T> List<String> listToMenu(List<T> items, Function<T, String> itemFormatter, String exitOption) {
+        List<String> formattedStrings = items.stream()
+                .map(itemFormatter)
+                .collect(Collectors.toList());
+        List<String> indexedList = CollectionFormatter.listToIndexedList(formattedStrings);
+        indexedList.add(String.format("%d. %s", 0, exitOption));
+        return indexedList;
+    }
+
+    public static <T> List<String> listToMenu(List<T> items, Function<T, String> itemFormatter) {
+        List<String> formattedStrings = items.stream()
+                .map(itemFormatter)
+                .collect(Collectors.toList());
+        return CollectionFormatter.listToIndexedList(formattedStrings);
     }
 }

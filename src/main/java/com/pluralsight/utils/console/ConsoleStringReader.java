@@ -2,6 +2,7 @@ package com.pluralsight.utils.console;
 
 import java.time.LocalDate;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public final class ConsoleStringReader {
@@ -44,6 +45,11 @@ public final class ConsoleStringReader {
                 scanner.nextLine();
             }
         }
+    }
+
+    public static <T> int getIntInRangeOfCollection(List<T> collection, boolean isZeroExitOption) {
+        int rangeStart = isZeroExitOption ? 0 : 1;
+        return getIntInRangeWithMargin(rangeStart, collection.size() + (isZeroExitOption ? 1 : 0));
     }
 
     public static String getStringWithMargin() {

@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class AddSandwichMenu {
+public class AddSandwichScreenMenu {
     public static int amountOfOptions() {
         return MenuOption.getAmountOfOptions();
     }

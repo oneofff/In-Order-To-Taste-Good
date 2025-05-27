@@ -11,7 +11,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PremiumToppingsCategory {
-    private String name;
+    private String category;
     private List<String> toppings;
     private Map<String, Double> basePricesBySize;
     private Map<String, Double> extraPricesBySize;

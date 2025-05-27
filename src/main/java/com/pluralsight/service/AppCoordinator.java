@@ -49,8 +49,8 @@ public class AppCoordinator {
 
     private static <M, T extends Enum<T> & MenuEntry<M>> void performAction(int option, Class<T> menu,
                                                                             M context) {
-        T menuOption = getMenuOption(option, menu);
         ScreenUtils.cls();
+        T menuOption = getMenuOption(option, menu);
         if (menuOption == null) {
             System.out.println("Invalid option. Please try again.");
             return;

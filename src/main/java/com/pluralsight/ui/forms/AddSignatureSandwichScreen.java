@@ -8,91 +8,77 @@ import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AddSignatureSandwichScreen {
 
     private final IMenuRepository menuRepository = MenuRepository.getInstance();
 
+
     public void addSignatureSandwich(Order order) {
-        List<SignatureSandwich> signatureSandwiches = menuRepository.getSignatureSandwiches();
+        List<SignatureSandwich> menu = menuRepository.getSignatureSandwiches();
+        if (!menuAvailable(menu)) return;
 
-        if (signatureSandwiches == null || signatureSandwiches.isEmpty()) {
+        int choice = showMenuAndGetChoice(menu);
+        if (choice == 0) return;
+
+        SignatureSandwich picked = menu.get(choice - 1);
+        ScreenUtils.cls();
+        new AddModificationScreen().addModification(picked);
+        processSelection(order, picked);
+    }
+
+    private boolean menuAvailable(List<SignatureSandwich> menu) {
+        if (menu == null || menu.isEmpty()) {
             ScreenUtils.cls();
-            ScreenUtils.printOnCenterOfTheScreen("Sorry, no signature sandwiches are available at the moment.");
+            ScreenUtils.printOnCenterOfTheScreen(
+                    "Sorry, no signature sandwiches are available at the moment.");
             ScreenUtils.waitTillPressEnter();
-            return;
+            return false;
         }
+        return true;
+    }
 
+    private int showMenuAndGetChoice(List<SignatureSandwich> menu) {
         ScreenUtils.printOnCenterOfTheScreen("Please select a Signature Sandwich:");
         ScreenUtils.printBox(CollectionFormatter.listToMenu(
-                signatureSandwiches,
-                (sandwich) -> String.format("%s - $%.2f", sandwich.getName(), sandwich.getBasePrice()),
+                menu,
+                s -> String.format("%s - $%.2f", s.getName(), s.getBasePrice()),
                 "Back to Add Sandwich Menu"
         ));
-
-        int choice = ConsoleStringReader.getIntInRangeOfCollection(signatureSandwiches, true);
-        ScreenUtils.cls();
-
-        if (choice == 0) {
-            return;
-        }
-
-        SignatureSandwich selectedSandwich = signatureSandwiches.get(choice - 1);
-
-        if (confirmAddToOrder(selectedSandwich)) { //
-            order.addItem(selectedSandwich); //
-            ScreenUtils.printOnCenterOfTheScreen("Signature sandwich '" + selectedSandwich.getName() + "' added to your order.");
-            ScreenUtils.printBox(order.getOrderDetails()); //
-        } else {
-            ScreenUtils.printOnCenterOfTheScreen("Signature sandwich '" + selectedSandwich.getName() + "' was not added to your order.");
-            List<String> sandwichDetails = new ArrayList<>();
-            sandwichDetails.add("Sandwich: " + selectedSandwich.getName());
-            sandwichDetails.add("Bread: " + selectedSandwich.getBread()); // Assumes bread is set for signature sandwiches
-            sandwichDetails.add("Toasted: " + (selectedSandwich.isToasted() ? "Yes" : "No"));
-            sandwichDetails.add("Ingredients: ");
-            if (selectedSandwich.getIngredients() != null && !selectedSandwich.getIngredients().isEmpty()) {
-                for (String ingredient : selectedSandwich.getIngredients()) {
-                    sandwichDetails.add("- " + ingredient);
-                }
-            } else {
-                sandwichDetails.add("- (Not specified)");
-            }
-            sandwichDetails.add(String.format("Price: $%.2f", selectedSandwich.getBasePrice())); //
-            ScreenUtils.printBox(sandwichDetails);
-
-        }
-        ScreenUtils.waitTillPressEnter(); //
+        return ConsoleStringReader.getIntInRangeOfCollection(menu, true);
     }
 
-    private boolean confirmAddToOrder(SignatureSandwich sandwich) { //
-        ScreenUtils.printOnCenterOfTheScreen("You selected: " + sandwich.getName());
-        List<String> sandwichDetails = new ArrayList<>();
-        sandwichDetails.add("Details for: " + sandwich.getName());
-        sandwichDetails.add("------------------------------");
-        sandwichDetails.add("Bread: " + (sandwich.getBread() != null ? sandwich.getBread() : "As specified")); //
-        sandwichDetails.add("Toasted: " + (sandwich.isToasted() ? "Yes" : "No")); //
-
-        sandwichDetails.add("Ingredients:");
-        if (sandwich.getIngredients() != null && !sandwich.getIngredients().isEmpty()) { //
-            for (String ingredient : sandwich.getIngredients()) {
-                sandwichDetails.add("  - " + ingredient);
-            }
-        } else {
-            sandwichDetails.add("  - (Standard signature ingredients)");
-        }
-        // In SignatureSandwich.java, getTotalPrice() returns 0. Using getBasePrice() from menu.json.
-        sandwichDetails.add(String.format("Price: $%.2f", sandwich.getBasePrice())); //
-        sandwichDetails.add("------------------------------");
-
-        ScreenUtils.printBox(sandwichDetails);
-        ScreenUtils.printOnCenterOfTheScreen("Add this sandwich to your order?");
-        ScreenUtils.printOnCenterOfTheScreen("1. Yes");
-        ScreenUtils.printOnCenterOfTheScreen("2. No");
-
-        int confirmationChoice = ConsoleStringReader.getIntInRangeWithMargin(1, 2); //
+    private void processSelection(Order order, SignatureSandwich picked) {
         ScreenUtils.cls();
-        return confirmationChoice == 1;
+
+        if (confirmAddToOrder(picked)) {
+            order.addItem(picked);
+            ScreenUtils.printOnCenterOfTheScreen(
+                    "Signature sandwich '" + picked.getName() + "' added to your order.");
+            ScreenUtils.printBox(order.getOrderDetails());
+        } else {
+            showNotAddedMessage(picked);
+        }
+        ScreenUtils.waitTillPressEnter();
+        ScreenUtils.cls();
     }
+
+
+    private boolean confirmAddToOrder(SignatureSandwich sandwich) {
+        ScreenUtils.printOnCenterOfTheScreen("Your signature sandwich");
+        ScreenUtils.printBox(sandwich.getRepresentation());
+        ScreenUtils.printOnCenterOfTheScreen("");
+        ScreenUtils.printOnCenterOfTheScreen("Add to order? 1=Yes, 2=No");
+        boolean isAdd = ConsoleStringReader.getIntInRangeWithMargin(1, 2) == 1;
+        ScreenUtils.cls();
+        return isAdd;
+    }
+
+    private void showNotAddedMessage(SignatureSandwich sandwich) {
+        ScreenUtils.printOnCenterOfTheScreen(
+                "Signature sandwich '" + sandwich.getName() + "' was not added to your order.");
+        ScreenUtils.printBox(sandwich.getRepresentation());
+    }
+
 }

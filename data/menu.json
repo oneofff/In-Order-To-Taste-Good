@@ -2,22 +2,70 @@
   "signatureSandwiches": [
     {
       "name": "BLT",
-      "ingredients": [
-        "bacon",
-        "lettuce",
-        "tomato"
+      "size": "8inch",
+      "bread": "White",
+      "toasted": true,
+      "includedPremiumToppings": [
+        {
+          "category": "Meats",
+          "name": "Bacon",
+          "basePrice": 0.0,
+          "size": "8inch",
+          "extra": false
+        },
+        {
+          "category": "Cheese",
+          "name": "American",
+          "basePrice": 0.0,
+          "size": "8inch",
+          "extra": false
+        }
+      ],
+      "includedRegularToppings": [
+        {
+          "name": "Lettuce"
+        },
+        {
+          "name": "Tomato"
+        }
+      ],
+      "includedSauces": [
+        {
+          "name": "Ranch"
+        }
       ],
       "basePrice": 11.0
     },
     {
       "name": "Philly Cheese Steak",
-      "ingredients": [
-        "8\" white bread",
-        "Steak",
-        "American cheese",
-        "Peppers",
-        "Mayo",
-        "Toasted"
+      "size": "8inch",
+      "bread": "White",
+      "toasted": true,
+      "includedPremiumToppings": [
+        {
+          "category": "Meats",
+          "name": "Steak",
+          "basePrice": 0.0,
+          "size": "8inch",
+          "extra": false
+        },
+        {
+          "category": "Cheese",
+          "name": "Provolone",
+          "basePrice": 0.0,
+          "size": "8inch",
+          "extra": false
+        }
+      ],
+      "includedRegularToppings": [
+        {
+          "name": "Peppers"
+        }
+      ],
+      "includedSauces": [
+        {
+          "name": "Mayo"
+        }
       ],
       "basePrice": 9.0
     }
@@ -40,7 +88,7 @@
   ],
   "premiumToppingsCategories": [
     {
-      "name": "Meats",
+      "category": "Meats",
       "toppings": [
         "Steak",
         "Ham",
@@ -61,7 +109,7 @@
       }
     },
     {
-      "name": "Cheese",
+      "category": "Cheese",
       "toppings": [
         "American",
         "Provolone",

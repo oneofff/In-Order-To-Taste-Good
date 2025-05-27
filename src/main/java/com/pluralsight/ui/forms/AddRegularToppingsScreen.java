@@ -1,7 +1,7 @@
 package com.pluralsight.ui.forms;
 
-import com.pluralsight.model.sandwich.CustomSandwich;
 import com.pluralsight.model.sandwich.RegularTopping;
+import com.pluralsight.model.sandwich.Sandwich;
 import com.pluralsight.repository.IMenuRepository;
 import com.pluralsight.repository.MenuRepository;
 import com.pluralsight.utils.console.CollectionFormatter;
@@ -16,7 +16,7 @@ public class AddRegularToppingsScreen {
 
     private final IMenuRepository menuRepository = MenuRepository.getInstance();
 
-    public void addRegularToppings(CustomSandwich sandwich) {
+    public void addRegularToppings(Sandwich sandwich) {
         List<RegularTopping> availableRegularToppings = new LinkedList<>(menuRepository.getRegularToppings());
 
         removeAlreadyAddedToppings(availableRegularToppings, sandwich);
@@ -30,7 +30,7 @@ public class AddRegularToppingsScreen {
 
     }
 
-    private RegularTopping addRegularToppingFlow(List<RegularTopping> availableRegularToppings, CustomSandwich sandwich) {
+    private RegularTopping addRegularToppingFlow(List<RegularTopping> availableRegularToppings, Sandwich sandwich) {
         printAvailableRegularToppings(availableRegularToppings, sandwich.getShortRepresentation());
 
         RegularTopping selectedTopping = getSelectedTopping(availableRegularToppings);
@@ -51,12 +51,12 @@ public class AddRegularToppingsScreen {
 
     private static void printAvailableRegularToppings(List<RegularTopping> availableRegularToppings, List<String> sandwichRepresentation) {
         ScreenUtils.printBox(CollectionFormatter.listToMenu(
-                availableRegularToppings, regularTopping -> regularTopping.getRepresentation(),
+                availableRegularToppings, RegularTopping::getRepresentation,
                 "Back"
         ), sandwichRepresentation);
     }
 
-    private void removeAlreadyAddedToppings(List<RegularTopping> availableRegularToppings, CustomSandwich sandwich) {
+    private void removeAlreadyAddedToppings(List<RegularTopping> availableRegularToppings, Sandwich sandwich) {
         HashSet<String> alreadyAddedToppings = new HashSet<>();
         for (RegularTopping topping : sandwich.getRegularToppings()) {
             alreadyAddedToppings.add(topping.getName());

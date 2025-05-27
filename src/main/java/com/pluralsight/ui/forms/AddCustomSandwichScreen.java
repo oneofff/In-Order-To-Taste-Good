@@ -29,13 +29,14 @@ public class AddCustomSandwichScreen {
             ScreenUtils.printBox(sandwich.getRepresentation());
         }
         ScreenUtils.waitTillPressEnter();
+        ScreenUtils.cls();
     }
 
     private CustomSandwich buildSandwich() {
         CustomSandwich sandwich = new CustomSandwich();
-
-        sandwich.setSizeName(selectSandwichSize());
-        sandwich.setBasePrice(menuRepository.getCustomSandwichPricesBySize().get(sandwich.getSizeName()));
+        sandwich.setName("Custom Sandwich");
+        sandwich.setSize(selectSandwichSize());
+        sandwich.setBasePrice(menuRepository.getCustomSandwichPricesBySize().get(sandwich.getSize()));
         sandwich.setBread(selectBread());
         sandwich.setToasted(getIsToasted());
 

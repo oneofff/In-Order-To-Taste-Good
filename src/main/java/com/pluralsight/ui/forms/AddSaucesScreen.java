@@ -20,17 +20,16 @@ public class AddSaucesScreen {
 
 
         while (!sauces.isEmpty()) {
-            printAvailableSauces(sauces);
+            printAvailableSauces(sauces, sandwich.getShortRepresentation());
             Sauce selectedSauce = getSelectedSauce(sauces);
             if (selectedSauce == null) break;
 
             sandwich.addSauce(selectedSauce);
             sauces.remove(selectedSauce);
             ScreenUtils.cls();
-            ScreenUtils.printlnWithMargins("Sauce added: " + selectedSauce.getName());
         }
-        ScreenUtils.cls();
 
+        ScreenUtils.cls();
     }
 
     private Sauce getSelectedSauce(List<Sauce> sauces) {
@@ -42,17 +41,17 @@ public class AddSaucesScreen {
 
     private void removeAlreadyAddedSauces(List<Sauce> sauces, CustomSandwich sandwich) {
         sauces.removeIf(sauce -> sandwich.getSauces().stream()
-                .anyMatch(addedSauce -> addedSauce.equals(sauce.getName())));
+                .anyMatch(addedSauce -> addedSauce.getName().equals(sauce.getName())));
     }
 
-    private void printAvailableSauces(List<Sauce> sauces) {
+    private void printAvailableSauces(List<Sauce> sauces, List<String> sandwichRepresentation) {
         ScreenUtils.printOnCenterOfTheScreen("Available Sauces:");
         ScreenUtils.printBox(
                 CollectionFormatter.listToMenu(
                         sauces,
-                        sauce -> String.format("%s - $%.2f", sauce.getName(), sauce.getPrice()),
+                        Sauce::getRepresentation,
                         "Back"
                 )
-        );
+                , sandwichRepresentation);
     }
 }

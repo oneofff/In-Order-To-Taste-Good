@@ -1,6 +1,7 @@
 package com.pluralsight.utils.console;
 
 
+import java.util.LinkedList;
 import java.util.List;
 
 public final class ScreenUtils {
@@ -8,27 +9,38 @@ public final class ScreenUtils {
     private static final int DEFAULT_BORDER_LENGTH = 52;
     private static final int INNER_WIDTH = DEFAULT_BORDER_LENGTH - 2;
 
-    public static void printBox(List<String> lines, String... additionalLines) {
+    public static void printBox(List<String> lines, List<String> additionalLinesToTheRight) {
         String border = buildBorder();
         printlnWithMargins(border);
-        int contentLength = lines.size() + additionalLines.length + 2;
+        int contentLength = lines.size();
 
         int amountOfEmptyLines = (SCREEN_HEIGHT_LINES - contentLength - 2) / 2;
         printEmptyLinesOnTop(amountOfEmptyLines);
 
+        int rows = Math.max(lines.size(), additionalLinesToTheRight.size());
 
-        for (String line : lines) {
-            printlnWithMargins("|" + center(line, INNER_WIDTH) + "|");
+        for (int i = 0; i < rows; i++) {
+            String inside = (i < lines.size())
+                    ? "|" + center(lines.get(i), INNER_WIDTH) + "|"
+                    : "|" + " ".repeat(INNER_WIDTH) + "|";
+
+            String extra = (i < additionalLinesToTheRight.size())
+                    ? " ".repeat(5) + additionalLinesToTheRight.get(i)
+                    : "";
+
+            printlnWithMargins(inside + extra);
         }
 
-        for (String additionalLine : additionalLines) {
-            printlnWithMargins("|" + center(additionalLine, INNER_WIDTH) + "|");
-        }
 
         printEmptyLinesOnBottom(amountOfEmptyLines);
 
         printlnWithMargins(border);
         evenFromTheBottom(contentLength + 2 + amountOfEmptyLines);
+    }
+
+
+    public static void printBox(List<String> lines) {
+        printBox(lines, new LinkedList<>());
     }
 
 

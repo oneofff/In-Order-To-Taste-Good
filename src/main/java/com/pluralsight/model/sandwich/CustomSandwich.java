@@ -13,28 +13,17 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 public class CustomSandwich extends Sandwich {
-    private Double basePrice;
-    private String sizeName;
-    private String bread;
-    private boolean isToasted;
-    private List<PremiumTopping> premiumToppings = new LinkedList<>();
-    private List<RegularTopping> regularToppings = new LinkedList<>();
-    private List<Sauce> sauces = new LinkedList<>();
 
-    public void addPremiumTopping(PremiumTopping topping) {
-        if (premiumToppings == null)
-            premiumToppings = new LinkedList<>();
-        premiumToppings.add(topping);
-    }
+
 
     public List<String> getRepresentation() {
         List<String> representation = new LinkedList<>();
-        representation.add("Sandwich Size: " + sizeName + " - $" + basePrice);
-        representation.add("Bread: " + bread + (isToasted ? " Toasted" : ""));
+        representation.add("Sandwich Size: " + getSize() + " - $" + getBasePrice());
+        representation.add("Bread: " + getBread() + (isToasted() ? " Toasted" : ""));
 
-        if (premiumToppings != null && !premiumToppings.isEmpty()) {
+        if (getPremiumToppings() != null && !getPremiumToppings().isEmpty()) {
             representation.add("Premium Toppings:");
-            Map<String, List<PremiumTopping>> categorizedToppings = premiumToppings.stream()
+            Map<String, List<PremiumTopping>> categorizedToppings = getPremiumToppings().stream()
                     .collect(Collectors.groupingBy(PremiumTopping::getCategory));
             for (var entry : categorizedToppings.entrySet()) {
                 representation.add(entry.getKey() + ":");
@@ -48,18 +37,18 @@ public class CustomSandwich extends Sandwich {
         representation.add("");
 
 
-        if (regularToppings != null && !regularToppings.isEmpty()) {
+        if (getRegularToppings() != null && !getRegularToppings().isEmpty()) {
             representation.add("Regular Toppings:");
-            for (RegularTopping topping : regularToppings) {
+            for (RegularTopping topping : getRegularToppings()) {
                 representation.add("- " + topping.getName());
             }
         }
 
         representation.add("");
 
-        if (sauces != null && !sauces.isEmpty()) {
+        if (getSauces() != null && !getSauces().isEmpty()) {
             representation.add("Sauces:");
-            for (var sauce : sauces) {
+            for (var sauce : getSauces()) {
                 representation.add("- " + sauce.getName());
             }
 
@@ -74,29 +63,5 @@ public class CustomSandwich extends Sandwich {
         return representation;
     }
 
-
-    public double getTotalPrice() {
-        return premiumToppings.stream()
-                .mapToDouble(PremiumTopping::getTotalPrice)
-                .sum()
-                + regularToppings.stream()
-                .mapToDouble(RegularTopping::getPrice)
-                .sum()
-                + basePrice;
-    }
-
-    private double getPremiumToppingsTotalPrice() {
-        return premiumToppings.stream()
-                .mapToDouble(t -> t.getBasePrice() + t.getExtraPrice())
-                .sum();
-    }
-
-    public void addRegularTopping(RegularTopping selectedTopping) {
-        regularToppings.add(selectedTopping);
-    }
-
-    public void addSauce(Sauce sauce) {
-        sauces.add(sauce);
-    }
 }
 

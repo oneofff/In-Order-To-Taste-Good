@@ -11,7 +11,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class PremiumTopping extends Topping {
     private String category;
-    private double basePrice;
     private double extraPrice;
     private String size;
     private boolean isExtra;
@@ -22,6 +21,6 @@ public class PremiumTopping extends Topping {
     }
 
     public double getTotalPrice() {
-        return basePrice + (isExtra ? extraPrice : 0.0);
+        return getBasePrice() + (isExtra ? extraPrice : 0.0);
     }
 }

@@ -25,14 +25,13 @@ public class AddRegularToppingsScreen {
             RegularTopping regularTopping = addRegularToppingFlow(availableRegularToppings, sandwich);
             if (regularTopping != null) sandwich.addRegularTopping(regularTopping);
             else break;
-            ScreenUtils.printlnWithMargins("Regular topping added: " + regularTopping.getName());
         }
 
 
     }
 
     private RegularTopping addRegularToppingFlow(List<RegularTopping> availableRegularToppings, CustomSandwich sandwich) {
-        printAvailableRegularToppings(availableRegularToppings);
+        printAvailableRegularToppings(availableRegularToppings, sandwich.getShortRepresentation());
 
         RegularTopping selectedTopping = getSelectedTopping(availableRegularToppings);
         ScreenUtils.cls();
@@ -50,14 +49,11 @@ public class AddRegularToppingsScreen {
         return availableRegularToppings.get(selection - 1);
     }
 
-    private static void printAvailableRegularToppings(List<RegularTopping> availableRegularToppings) {
+    private static void printAvailableRegularToppings(List<RegularTopping> availableRegularToppings, List<String> sandwichRepresentation) {
         ScreenUtils.printBox(CollectionFormatter.listToMenu(
-                availableRegularToppings,
-                (topping) -> String.format("%s - $%.2f",
-                        topping.getName(),
-                        topping.getPrice()),
+                availableRegularToppings, regularTopping -> regularTopping.getRepresentation(),
                 "Back"
-        ));
+        ), sandwichRepresentation);
     }
 
     private void removeAlreadyAddedToppings(List<RegularTopping> availableRegularToppings, CustomSandwich sandwich) {

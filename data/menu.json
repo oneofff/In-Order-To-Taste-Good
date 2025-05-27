@@ -83,80 +83,80 @@
   "regularToppings": [
     {
       "name": "Lettuce",
-      "price": 0.0
+      "basePrice": 0.0
     },
     {
       "name": "Tomato",
-      "price": 0.0
+      "basePrice": 0.0
     },
     {
       "name": "Onion",
-      "price": 0.0
+      "basePrice": 0.0
     },
     {
       "name": "Pickles",
-      "price": 0.0
+      "basePrice": 0.0
     },
     {
       "name": "Jalapeños",
-      "price": 0.0
+      "basePrice": 0.0
     },
     {
       "name": "Cucumbers",
-      "price": 0.0
+      "basePrice": 0.0
     },
     {
       "name": "Mushrooms",
-      "price": 0.0
+      "basePrice": 0.0
     },
     {
       "name": "Guacamole",
-      "price": 0.0
+      "basePrice": 0.0
     }
   ],
   "drinkOptions": [
     {
-      "name": "small",
+      "name": "Small",
       "price": 2.0
     },
     {
-      "name": "medium",
+      "name": "Medium",
       "price": 2.5
     },
     {
-      "name": "large",
+      "name": "Large",
       "price": 3.0
     }
   ],
   "sauces": [
     {
-      "name": "mayo",
+      "name": "Mayo",
       "price": 0.0
     },
     {
-      "name": "mustard",
+      "name": "Mustard",
       "price": 0.0
     },
     {
-      "name": "ketchup",
+      "name": "Ketchup",
       "price": 0.0
     },
     {
-      "name": "ranch",
+      "name": "Ranch",
       "price": 0.0
     },
     {
-      "name": "thousand islands",
+      "name": "Thousand islands",
       "price": 0.0
     },
     {
-      "name": "vinaigrette",
+      "name": "Vinaigrette",
       "price": 0.0
     }
   ],
   "chipsOptions": [
     {
-      "name": "regular",
+      "name": "Regular",
       "price": 1.5
     }
   ]

@@ -7,14 +7,16 @@ import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
 
+import java.util.List;
+
 public class AddModificationScreen {
 
     private final IMenuRepository menuRepository = MenuRepository.getInstance();
 
     public void addModification(CustomSandwich sandwich) {
-
         boolean running = true;
         while (running) {
+            printModificationMenu(sandwich.getShortRepresentation());
             int modificationType = getModificationType();
             switch (modificationType) {
                 case 1 -> new AddPremiumToppingsScreen().addPremiumToppings(sandwich);
@@ -27,7 +29,6 @@ public class AddModificationScreen {
     }
 
     private int getModificationType() {
-        printModificationMenu();
         int modificationType = ConsoleStringReader.getIntInRangeOfCollection(
                 menuRepository.getSandwichAvailableModificationTypes(), true
         );
@@ -35,11 +36,11 @@ public class AddModificationScreen {
         return modificationType;
     }
 
-    private void printModificationMenu() {
+    private void printModificationMenu(List<String> sandwichRepresentation) {
         ScreenUtils.printOnCenterOfTheScreen("Please select your modifications");
         ScreenUtils.printBox(CollectionFormatter.listToMenu(
                 menuRepository.getSandwichAvailableModificationTypes(), String::format,
                 "Finish Modifications"
-        ));
+        ), sandwichRepresentation);
     }
 }

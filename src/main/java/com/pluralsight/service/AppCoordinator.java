@@ -39,6 +39,10 @@ public class AppCoordinator {
         while (true) {
             AddSandwichScreenMenu.print();
             int option = ScreenUtils.askForMenuOptionsInput(AddSandwichScreenMenu.amountOfOptions());
+            if (option == AddSandwichScreenMenu.MenuOption.BACK.getValue()) {
+                ScreenUtils.cls();
+                return;
+            }
             performAction(option, AddSandwichScreenMenu.MenuOption.class, order);
         }
     }

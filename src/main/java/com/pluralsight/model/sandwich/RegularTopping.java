@@ -9,11 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegularTopping extends Topping {
 
-    private Double price;
+
 
     @Override
     protected double getTotalPrice() {
-        return price;
+        return getBasePrice();
     }
 
+
+    public String getRepresentation() {
+        return String.format("%s %s", getName(), getBasePrice() == 0.0 ? "" : String.format(" -$%.2f", getBasePrice()));
+    }
 }

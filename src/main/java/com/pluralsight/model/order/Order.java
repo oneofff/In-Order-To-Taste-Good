@@ -32,7 +32,6 @@ public class Order {
             details.addAll(item.getRepresentation());
             details.add("Total Price: " + item.getTotalPrice());
         }
-        details.add("Total Order Price: " + getTotalPrice());
         return details;
     }
 }

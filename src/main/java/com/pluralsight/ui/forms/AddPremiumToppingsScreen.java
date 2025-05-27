@@ -3,6 +3,7 @@ package com.pluralsight.ui.forms;
 import com.pluralsight.model.menu.PremiumToppingsCategory;
 import com.pluralsight.model.sandwich.CustomSandwich;
 import com.pluralsight.model.sandwich.PremiumTopping;
+import com.pluralsight.model.sandwich.Sandwich;
 import com.pluralsight.repository.IMenuRepository;
 import com.pluralsight.repository.MenuRepository;
 import com.pluralsight.utils.console.CollectionFormatter;
@@ -33,7 +34,7 @@ public class AddPremiumToppingsScreen {
 
     private PremiumTopping addPremiumToppingFlow(LinkedList<PremiumToppingsCategory> availablePremiumToppingsCategories, CustomSandwich sandwich) {
 
-        printPremiumToppingsMenu(availablePremiumToppingsCategories, sandwich.getSizeName());
+        printPremiumToppingsMenu(availablePremiumToppingsCategories, sandwich.getSize(), sandwich);
 
         PremiumToppingsCategory category = getPremiumToppingCategory(availablePremiumToppingsCategories);
         ScreenUtils.cls();
@@ -63,11 +64,11 @@ public class AddPremiumToppingsScreen {
         return selection == 0 ? null : availablePremiumToppingsCategories.get(selection - 1);
     }
 
-    private void printPremiumToppingsMenu(List<PremiumToppingsCategory> premiumToppingsCategories, String size) {
+    private void printPremiumToppingsMenu(List<PremiumToppingsCategory> premiumToppingsCategories, String size, Sandwich sandwich) {
         ScreenUtils.printBox(CollectionFormatter.listToMenu(
                 premiumToppingsCategories,
                 (topping) -> String.format("%s - $%.2f", topping.getName(), topping.getBasePricesBySize(size)),
-                "Back"));
+                "Back"), sandwich.getShortRepresentation());
     }
 
     private PremiumTopping getSelectedTopping(PremiumToppingsCategory premiumToppingsCategory, CustomSandwich sandwich) {
@@ -85,10 +86,10 @@ public class AddPremiumToppingsScreen {
         return PremiumTopping.builder()
                 .category(premiumToppingsCategory.getName())
                 .name(toppingName)
-                .basePrice(premiumToppingsCategory.getBasePricesBySize(sandwich.getSizeName()))
-                .extraPrice(isExtra ? premiumToppingsCategory.getExtraPriceBySize(sandwich.getSizeName()) : 0.0)
+                .basePrice(premiumToppingsCategory.getBasePricesBySize(sandwich.getSize()))
+                .extraPrice(isExtra ? premiumToppingsCategory.getExtraPriceBySize(sandwich.getSize()) : 0.0)
                 .isExtra(isExtra)
-                .size(sandwich.getSizeName())
+                .size(sandwich.getSize())
                 .build();
     }
 
@@ -105,17 +106,17 @@ public class AddPremiumToppingsScreen {
         ScreenUtils.printOnCenterOfTheScreen("Please select your " + premiumToppingsCategory.getName());
         ScreenUtils.printBox(CollectionFormatter.listToMenu(
                 premiumToppingsCategory.getToppings(),
-                (type) -> String.format("%s - $%.2f", type, premiumToppingsCategory.getBasePricesBySize(sandwich.getSizeName())),
-                "Back"));
+                (type) -> String.format("%s - $%.2f", type, premiumToppingsCategory.getBasePricesBySize(sandwich.getSize())),
+                "Back"), sandwich.getShortRepresentation());
     }
 
     private boolean getIsExtra(CustomSandwich customSandwich, PremiumToppingsCategory premiumToppingsCategory, String toppingType) {
         ScreenUtils.printBox(List.of(
                 "Do you want extra " + toppingType + "? " + "$" +
-                        premiumToppingsCategory.getExtraPriceBySize(customSandwich.getSizeName()),
+                        premiumToppingsCategory.getExtraPriceBySize(customSandwich.getSize()),
                 "1. Yes",
                 "2. No"
-        ));
+        ), customSandwich.getShortRepresentation());
         boolean isExtra = ConsoleStringReader.getIntInRangeWithMargin(1, 2) == 1;
         ScreenUtils.cls();
         return isExtra;

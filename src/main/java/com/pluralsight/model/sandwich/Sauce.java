@@ -8,7 +8,6 @@ public class Sauce {
     private double price;
 
     public String getRepresentation() {
-        return String.format("%s - $%.2f", name, price);
+        return String.format("%s %s", name, price == 0.0 ? "" : String.format("- $%.2f", price));
     }
-
 }

@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public abstract class Topping {
     private String name;
+    private Double basePrice;
 
     protected abstract double getTotalPrice();
 }

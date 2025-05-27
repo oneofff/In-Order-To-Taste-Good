@@ -29,9 +29,10 @@ public class Order {
         List<String> details = new LinkedList<>();
         details.add("Items in Order:");
         for (OrderItem item : items) {
-            details.addAll(item.getRepresentation());
-            details.add("Total Price: " + item.getTotalPrice());
+            details.addAll(item.getShortRepresentation());
+            details.add("");
         }
+        details.add(String.format("Total Price: %.2f", getTotalPrice()));
         return details;
     }
 }

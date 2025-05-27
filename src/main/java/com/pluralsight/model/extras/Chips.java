@@ -19,6 +19,11 @@ public class Chips extends OrderItem {
     }
 
     @Override
+    public List<String> getShortRepresentation() {
+        return List.of();
+    }
+
+    @Override
     public double getTotalPrice() {
         return 0;
     }

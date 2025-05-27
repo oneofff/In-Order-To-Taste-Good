@@ -76,20 +76,20 @@ public abstract class Sandwich extends OrderItem {
         return representation;
     }
 
+    @Override
     public List<String> getShortRepresentation() {
         List<String> out = new LinkedList<>();
 
-        out.add("Sandwich: " + getName());
-        if (getSize() == null || getSize().isEmpty()) {
-            out.add("Size: Not specified");
-        } else {
-            out.add("Size: " + getSize());
-        }
-        out.add(String.format("%s %s%s  - $%.2f",
-                size,
+        out.add("Sandwich: " + getName() + " " + getSize() + String.format(" %s %s",
                 getBread(),
-                isToasted() ? " Toasted" : "",
-                basePrice));
+                isToasted() ? "Toasted" : ""));
+
+
+//        out.add(String.format("%s %s%s  - $%.2f",
+//                size,
+//                getBread(),
+//                isToasted() ? " Toasted" : "",
+//                basePrice));
 
 
         if (getAllPremiumToppings() != null && !getAllPremiumToppings().isEmpty()) {
@@ -114,7 +114,7 @@ public abstract class Sandwich extends OrderItem {
             out.add("Sauces: " + sau);
         }
 
-        out.add(String.format("Total: $%.2f", getTotalPrice()));
+        out.add(String.format("Price: $%.2f", getTotalPrice()));
 
         return out;
     }

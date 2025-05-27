@@ -56,10 +56,11 @@ public class AddSignatureSandwichScreen {
             order.addItem(picked);
             ScreenUtils.printOnCenterOfTheScreen(
                     "Signature sandwich '" + picked.getName() + "' added to your order.");
-            ScreenUtils.printBox(order.getOrderDetails());
         } else {
             showNotAddedMessage(picked);
+
         }
+        ScreenUtils.printBox(order.getOrderDetails());
         ScreenUtils.waitTillPressEnter();
         ScreenUtils.cls();
     }
@@ -78,7 +79,6 @@ public class AddSignatureSandwichScreen {
     private void showNotAddedMessage(SignatureSandwich sandwich) {
         ScreenUtils.printOnCenterOfTheScreen(
                 "Signature sandwich '" + sandwich.getName() + "' was not added to your order.");
-        ScreenUtils.printBox(sandwich.getRepresentation());
     }
 
 }

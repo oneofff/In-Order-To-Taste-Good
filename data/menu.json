@@ -38,7 +38,7 @@
     "RegularToppings",
     "Sauces"
   ],
-  "premiumToppings": [
+  "premiumToppingsMenus": [
     {
       "name": "Meats",
       "types": [

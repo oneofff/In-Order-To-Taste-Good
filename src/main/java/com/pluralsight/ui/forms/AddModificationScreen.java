@@ -2,6 +2,7 @@ package com.pluralsight.ui.forms;
 
 import com.pluralsight.repository.IMenuRepository;
 import com.pluralsight.repository.MenuRepository;
+import com.pluralsight.ui.forms.dto.SandwichDto;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -10,15 +11,15 @@ public class AddModificationScreen {
 
     private final IMenuRepository menuRepository = MenuRepository.getInstance();
 
-    public void addModification(String sizeName) {
+    public void addModification(SandwichDto sandwich) {
 
         boolean running = true;
         while (running) {
             int modificationType = getModificationType();
             switch (modificationType) {
-                case 1 -> new AddPremiumToppingsScreen().addPremiumToppings(sizeName);
-                case 2 -> new AddRegularToppingsScreen().addRegularToppings(sizeName);
-                case 3 -> new AddSaucesScreen().addSauces();
+                case 1 -> new AddPremiumToppingsScreen().addPremiumToppings(sandwich);
+                case 2 -> new AddRegularToppingsScreen().addRegularToppings(sandwich);
+                case 3 -> new AddSaucesScreen().addSauces(sandwich);
                 case 0 -> running = false;
                 default -> ScreenUtils.printOnCenterOfTheScreen("Invalid option selected.");
             }

@@ -1,8 +1,10 @@
 package com.pluralsight.ui.forms;
 
-import com.pluralsight.model.sandwich.PremiumTopping;
+import com.pluralsight.model.menu.PremiumToppingsMenu;
 import com.pluralsight.repository.IMenuRepository;
 import com.pluralsight.repository.MenuRepository;
+import com.pluralsight.ui.forms.dto.PremiumToppingDto;
+import com.pluralsight.ui.forms.dto.SandwichDto;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -13,12 +15,12 @@ public class AddPremiumToppingsScreen {
 
     private final IMenuRepository menuRepository = MenuRepository.getInstance();
 
-    public void addPremiumToppings(String sizeName) {
+    public void addPremiumToppings(SandwichDto sandwich) {
 
 
         ScreenUtils.printBox(CollectionFormatter.listToMenu(
                 menuRepository.getPremiumToppings(),
-                (topping) -> String.format("%s - $%.2f", topping.getName(), topping.getBasePricesBySize(sizeName)),
+                (topping) -> String.format("%s - $%.2f", topping.getName(), topping.getBasePricesBySize(sandwich.getSizeName())),
                 "Back"));
 
         int premiumTopping = ConsoleStringReader.getIntInRangeOfCollection(
@@ -29,34 +31,44 @@ public class AddPremiumToppingsScreen {
             return;
         }
         ScreenUtils.cls();
-        printSelectedTopping(menuRepository.getPremiumToppings().get(premiumTopping - 1), sizeName);
+        printSelectedTopping(menuRepository.getPremiumToppings().get(premiumTopping - 1), sandwich);
     }
 
-    private void printSelectedTopping(PremiumTopping premiumTopping, String sizeName) {
-        ScreenUtils.printOnCenterOfTheScreen("Please select your " + premiumTopping.getName());
+    private void printSelectedTopping(PremiumToppingsMenu premiumToppingsMenu, SandwichDto sandwich) {
+        ScreenUtils.printOnCenterOfTheScreen("Please select your " + premiumToppingsMenu.getName());
         ScreenUtils.printBox(CollectionFormatter.listToMenu(
-                premiumTopping.getTypes(),
-                (type) -> String.format("%s - $%.2f", type, premiumTopping.getBasePricesBySize(sizeName)),
+                premiumToppingsMenu.getTypes(),
+                (type) -> String.format("%s - $%.2f", type, premiumToppingsMenu.getBasePricesBySize(sandwich.getSizeName())),
                 "Back"));
 
         int typeIndex = ConsoleStringReader.getIntInRangeOfCollection(
-                premiumTopping.getTypes(),
+                premiumToppingsMenu.getTypes(),
                 true);
         if (typeIndex == 0) {
             ScreenUtils.cls();
             return;
         }
-        String toppingType = premiumTopping.getTypes().get(typeIndex - 1);
+        String toppingType = premiumToppingsMenu.getTypes().get(typeIndex - 1);
 
         ScreenUtils.cls();
 
-        boolean extraToppings = isExtraToppings(sizeName, premiumTopping, toppingType);
+        boolean isExtraToppings = isExtraToppings(sandwich, premiumToppingsMenu, toppingType);
+        PremiumToppingDto premiumToppingDto = PremiumToppingDto.builder()
+                .name(premiumToppingsMenu.getName())
+                .type(toppingType)
+                .basePrice(premiumToppingsMenu.getBasePricesBySize(sandwich.getSizeName()))
+                .extraPrice(isExtraToppings ? premiumToppingsMenu.getExtraPriceBySize(sandwich.getSizeName()) : 0.0)
+                .isExtra(isExtraToppings)
+                .size(sandwich.getSizeName())
+                .build();
 
+        sandwich.addPremiumTopping(premiumToppingDto);
     }
 
-    private boolean isExtraToppings(String sizeName, PremiumTopping premiumTopping, String toppingType) {
+    private boolean isExtraToppings(SandwichDto sandwichDto, PremiumToppingsMenu premiumToppingsMenu, String toppingType) {
         ScreenUtils.printBox(List.of(
-                "Do you want extra " + toppingType + "? " + "$" + premiumTopping.getExtraPriceBySize(sizeName),
+                "Do you want extra " + toppingType + "? " + "$" +
+                        premiumToppingsMenu.getExtraPriceBySize(sandwichDto.getSizeName()),
                 "1. Yes",
                 "2. No"
         ));

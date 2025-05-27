@@ -2,6 +2,7 @@ package com.pluralsight.ui.forms;
 
 import com.pluralsight.repository.IMenuRepository;
 import com.pluralsight.repository.MenuRepository;
+import com.pluralsight.ui.forms.dto.SandwichDto;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -12,14 +13,35 @@ public class AddCustomSandwichScreen {
     private final IMenuRepository menuRepository = MenuRepository.getInstance();
 
     public void addCustomSandwich() {
-        String sizeName = selectSandwichSize();
-        int breadType = selectBreadType();
+        SandwichDto sandwich = new SandwichDto();
 
-        new AddModificationScreen().addModification(sizeName);
+        sandwich.setSizeName(selectSandwichSize());
+        sandwich.setBasePrice(menuRepository.getSandwichSizes().get(sandwich.getSizeName()));
+        sandwich.setBread(selectBread());
+
+        new AddModificationScreen().addModification(sandwich);
+
+        ScreenUtils.printOnCenterOfTheScreen("Your custom sandwich");
+        ScreenUtils.printBox(
+                sandwich.getRepresentation(),
+                "Do you want to add this sandwich to your order?",
+                "1. Yes",
+                "2. No"
+        );
+
+        boolean addToOrder = ConsoleStringReader.getIntInRangeWithMargin(0, 1) == 1;
+        if (addToOrder) {
+            ScreenUtils.cls();
+            ScreenUtils.printOnCenterOfTheScreen("Your custom sandwich has been added to your order.");
+
+        } else {
+            ScreenUtils.cls();
+            ScreenUtils.printOnCenterOfTheScreen("Your custom sandwich was not added to your order.");
+        }
     }
 
 
-    private int selectBreadType() {
+    private String selectBread() {
         ScreenUtils.printOnCenterOfTheScreen("Please select your bread");
         ScreenUtils.printBox(CollectionFormatter.listToMenu(
                 menuRepository.getBreadOptions(),
@@ -27,7 +49,7 @@ public class AddCustomSandwichScreen {
         ));
         int breadType = ConsoleStringReader.getIntInRangeOfCollection(menuRepository.getBreadOptions(), false);
         ScreenUtils.cls();
-        return breadType;
+        return menuRepository.getBreadOptions().get(breadType - 1);
     }
 
     private String selectSandwichSize() {

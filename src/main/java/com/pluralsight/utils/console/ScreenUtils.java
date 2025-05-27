@@ -8,11 +8,12 @@ public final class ScreenUtils {
     private static final int DEFAULT_BORDER_LENGTH = 52;
     private static final int INNER_WIDTH = DEFAULT_BORDER_LENGTH - 2;
 
-    public static void printBox(List<String> lines) {
+    public static void printBox(List<String> lines, String... additionalLines) {
         String border = buildBorder();
         printlnWithMargins(border);
+        int contentLength = lines.size() + additionalLines.length + 2;
 
-        int amountOfEmptyLines = (SCREEN_HEIGHT_LINES - lines.size() - 2) / 2;
+        int amountOfEmptyLines = (SCREEN_HEIGHT_LINES - contentLength - 2) / 2;
         printEmptyLinesOnTop(amountOfEmptyLines);
 
 
@@ -20,10 +21,14 @@ public final class ScreenUtils {
             printlnWithMargins("|" + center(line, INNER_WIDTH) + "|");
         }
 
+        for (String additionalLine : additionalLines) {
+            printlnWithMargins("|" + center(additionalLine, INNER_WIDTH) + "|");
+        }
+
         printEmptyLinesOnBottom(amountOfEmptyLines);
 
         printlnWithMargins(border);
-        evenFromTheBottom(lines.size() + 2 + amountOfEmptyLines);
+        evenFromTheBottom(contentLength + 2 + amountOfEmptyLines);
     }
 
 

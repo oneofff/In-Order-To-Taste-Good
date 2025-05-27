@@ -1,5 +1,6 @@
 package com.pluralsight.ui.menu;
 
+import com.pluralsight.model.order.Order;
 import com.pluralsight.service.AppCoordinator;
 import com.pluralsight.ui.forms.AddChipsScreen;
 import com.pluralsight.ui.forms.AddDrinkScreen;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class OrderScreenMenu {
 
@@ -27,16 +29,16 @@ public class OrderScreenMenu {
 
     @Getter
     @AllArgsConstructor
-    public enum MenuOption implements MenuEntry {
+    public enum MenuOption implements MenuEntry<Order> {
         ADD_SANDWICH(1, "Add sandwich", AppCoordinator::addSandwichFlow),
         ADD_DRINKS(2, "Add drinks", AddDrinkScreen::addDrink),
         ADD_CHIPS(3, "Add chips", AddChipsScreen::addChips),
         CHECKOUT(4, "Checkout", OrderSummary::mock),
-        CANCEL_ORDER(0, "Cancel Order", AppCoordinator::homeScreenFlow);
+        CANCEL_ORDER(0, "Cancel Order", (Order o) -> AppCoordinator.homeScreenFlow());
 
         private final int value;
         private final String name;
-        private final Runnable action;
+        private final Consumer<Order> action;
 
         public static int getAmountOfOptions() {
             return MenuOption.values().length;

@@ -1,10 +1,10 @@
 package com.pluralsight.ui.forms;
 
 import com.pluralsight.model.menu.PremiumToppingsCategory;
+import com.pluralsight.model.sandwich.CustomSandwich;
+import com.pluralsight.model.sandwich.PremiumTopping;
 import com.pluralsight.repository.IMenuRepository;
 import com.pluralsight.repository.MenuRepository;
-import com.pluralsight.ui.forms.dto.PremiumToppingDto;
-import com.pluralsight.ui.forms.dto.SandwichDto;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -17,13 +17,13 @@ public class AddPremiumToppingsScreen {
 
     private final IMenuRepository menuRepository = MenuRepository.getInstance();
 
-    public void addPremiumToppings(SandwichDto sandwich) {
+    public void addPremiumToppings(CustomSandwich sandwich) {
         var availablePremiumToppingsCategories = new LinkedList<>(menuRepository.getPremiumToppingsCategories());
 
         removeAlreadyAddedToppings(availablePremiumToppingsCategories, sandwich);
 
         while (!availablePremiumToppingsCategories.isEmpty()) {
-            PremiumToppingDto topping = addPremiumToppingFlow(availablePremiumToppingsCategories, sandwich);
+            PremiumTopping topping = addPremiumToppingFlow(availablePremiumToppingsCategories, sandwich);
             if (topping != null) sandwich.addPremiumTopping(topping);
             else break;
             availablePremiumToppingsCategories.removeIf(category -> category.getToppings().isEmpty());
@@ -31,22 +31,22 @@ public class AddPremiumToppingsScreen {
 
     }
 
-    private PremiumToppingDto addPremiumToppingFlow(LinkedList<PremiumToppingsCategory> availablePremiumToppingsCategories, SandwichDto sandwich) {
+    private PremiumTopping addPremiumToppingFlow(LinkedList<PremiumToppingsCategory> availablePremiumToppingsCategories, CustomSandwich sandwich) {
 
         printPremiumToppingsMenu(availablePremiumToppingsCategories, sandwich.getSizeName());
 
         PremiumToppingsCategory category = getPremiumToppingCategory(availablePremiumToppingsCategories);
         ScreenUtils.cls();
         if (category == null) return null;
-        PremiumToppingDto selectedTopping = getSelectedTopping(category, sandwich);
+        PremiumTopping selectedTopping = getSelectedTopping(category, sandwich);
         if (selectedTopping == null) return null;
         category.getToppings().remove(selectedTopping.getName());
         return selectedTopping;
     }
 
-    private void removeAlreadyAddedToppings(List<PremiumToppingsCategory> availablePremiumToppingsCategories, SandwichDto sandwich) {
+    private void removeAlreadyAddedToppings(List<PremiumToppingsCategory> availablePremiumToppingsCategories, CustomSandwich sandwich) {
         HashSet<String> alreadyAddedToppings = new HashSet<>();
-        for (PremiumToppingDto topping : sandwich.getPremiumToppings()) {
+        for (PremiumTopping topping : sandwich.getPremiumToppings()) {
             alreadyAddedToppings.add(topping.getName());
         }
 
@@ -70,7 +70,7 @@ public class AddPremiumToppingsScreen {
                 "Back"));
     }
 
-    private PremiumToppingDto getSelectedTopping(PremiumToppingsCategory premiumToppingsCategory, SandwichDto sandwich) {
+    private PremiumTopping getSelectedTopping(PremiumToppingsCategory premiumToppingsCategory, CustomSandwich sandwich) {
 
         printToppings(premiumToppingsCategory, sandwich);
 
@@ -82,7 +82,7 @@ public class AddPremiumToppingsScreen {
 
         boolean isExtra = getIsExtra(sandwich, premiumToppingsCategory, toppingName);
 
-        return PremiumToppingDto.builder()
+        return PremiumTopping.builder()
                 .category(premiumToppingsCategory.getName())
                 .name(toppingName)
                 .basePrice(premiumToppingsCategory.getBasePricesBySize(sandwich.getSizeName()))
@@ -92,7 +92,7 @@ public class AddPremiumToppingsScreen {
                 .build();
     }
 
-    private static String getToppingName(PremiumToppingsCategory premiumToppingsCategory, SandwichDto sandwich) {
+    private static String getToppingName(PremiumToppingsCategory premiumToppingsCategory, CustomSandwich sandwich) {
         int selection = ConsoleStringReader.getIntInRangeOfCollection(
                 premiumToppingsCategory.getToppings(),
                 true
@@ -101,7 +101,7 @@ public class AddPremiumToppingsScreen {
         return selection == 0 ? null : premiumToppingsCategory.getToppings().get(selection - 1);
     }
 
-    private static void printToppings(PremiumToppingsCategory premiumToppingsCategory, SandwichDto sandwich) {
+    private static void printToppings(PremiumToppingsCategory premiumToppingsCategory, CustomSandwich sandwich) {
         ScreenUtils.printOnCenterOfTheScreen("Please select your " + premiumToppingsCategory.getName());
         ScreenUtils.printBox(CollectionFormatter.listToMenu(
                 premiumToppingsCategory.getToppings(),
@@ -109,10 +109,10 @@ public class AddPremiumToppingsScreen {
                 "Back"));
     }
 
-    private boolean getIsExtra(SandwichDto sandwichDto, PremiumToppingsCategory premiumToppingsCategory, String toppingType) {
+    private boolean getIsExtra(CustomSandwich customSandwich, PremiumToppingsCategory premiumToppingsCategory, String toppingType) {
         ScreenUtils.printBox(List.of(
                 "Do you want extra " + toppingType + "? " + "$" +
-                        premiumToppingsCategory.getExtraPriceBySize(sandwichDto.getSizeName()),
+                        premiumToppingsCategory.getExtraPriceBySize(customSandwich.getSizeName()),
                 "1. Yes",
                 "2. No"
         ));

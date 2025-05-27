@@ -1,9 +1,9 @@
 package com.pluralsight.ui.forms;
 
+import com.pluralsight.model.sandwich.CustomSandwich;
 import com.pluralsight.model.sandwich.RegularTopping;
 import com.pluralsight.repository.IMenuRepository;
 import com.pluralsight.repository.MenuRepository;
-import com.pluralsight.ui.forms.dto.SandwichDto;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -16,7 +16,7 @@ public class AddRegularToppingsScreen {
 
     private final IMenuRepository menuRepository = MenuRepository.getInstance();
 
-    public void addRegularToppings(SandwichDto sandwich) {
+    public void addRegularToppings(CustomSandwich sandwich) {
         List<RegularTopping> availableRegularToppings = new LinkedList<>(menuRepository.getRegularToppings());
 
         removeAlreadyAddedToppings(availableRegularToppings, sandwich);
@@ -31,7 +31,7 @@ public class AddRegularToppingsScreen {
 
     }
 
-    private RegularTopping addRegularToppingFlow(List<RegularTopping> availableRegularToppings, SandwichDto sandwich) {
+    private RegularTopping addRegularToppingFlow(List<RegularTopping> availableRegularToppings, CustomSandwich sandwich) {
         printAvailableRegularToppings(availableRegularToppings);
 
         RegularTopping selectedTopping = getSelectedTopping(availableRegularToppings);
@@ -60,7 +60,7 @@ public class AddRegularToppingsScreen {
         ));
     }
 
-    private void removeAlreadyAddedToppings(List<RegularTopping> availableRegularToppings, SandwichDto sandwich) {
+    private void removeAlreadyAddedToppings(List<RegularTopping> availableRegularToppings, CustomSandwich sandwich) {
         HashSet<String> alreadyAddedToppings = new HashSet<>();
         for (RegularTopping topping : sandwich.getRegularToppings()) {
             alreadyAddedToppings.add(topping.getName());

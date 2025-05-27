@@ -3,6 +3,8 @@ package com.pluralsight.model.extras;
 import com.pluralsight.model.order.OrderItem;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Drink extends OrderItem {
 
@@ -11,12 +13,12 @@ public class Drink extends OrderItem {
 
 
     @Override
-    public String getDescription() {
-        return name;
+    public List<String> getRepresentation() {
+        return List.of();
     }
 
     @Override
-    public double getPrice() {
-        return price;
+    public double getTotalPrice() {
+        return 0;
     }
 }

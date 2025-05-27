@@ -12,7 +12,7 @@ public class RegularTopping extends Topping {
     private Double price;
 
     @Override
-    protected double getPrice(String size) {
+    protected double getTotalPrice() {
         return price;
     }
 

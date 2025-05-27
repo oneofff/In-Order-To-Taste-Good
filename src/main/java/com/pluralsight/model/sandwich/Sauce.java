@@ -6,4 +6,9 @@ import lombok.Data;
 public class Sauce {
     private String name;
     private double price;
+
+    public String getRepresentation() {
+        return String.format("%s - $%.2f", name, price);
+    }
+
 }

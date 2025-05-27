@@ -12,13 +12,14 @@ public class SignatureSandwich extends Sandwich {
     private List<String> ingredients;
     private double basePrice;
 
+
     @Override
-    public String getDescription() {
-        return "";
+    public List<String> getRepresentation() {
+        return List.of();
     }
 
     @Override
-    public double getPrice() {
-        return basePrice;
+    public double getTotalPrice() {
+        return 0;
     }
 }

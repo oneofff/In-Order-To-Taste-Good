@@ -1,7 +1,9 @@
 package com.pluralsight.ui.forms;
 
+import com.pluralsight.model.order.Order;
+
 public class AddDrinkScreen {
-    public static void addDrink() {
+    public static void addDrink(Order order) {
         System.out.print("Choose a drink to add: ");
         //TODO display drink options
 //        int drinkChoice = ConsoleStringReader.getIntInRangeWithMargin(1, 3);

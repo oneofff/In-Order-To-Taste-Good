@@ -1,9 +1,9 @@
 package com.pluralsight.ui.forms;
 
+import com.pluralsight.model.sandwich.CustomSandwich;
 import com.pluralsight.model.sandwich.Sauce;
 import com.pluralsight.repository.IMenuRepository;
 import com.pluralsight.repository.MenuRepository;
-import com.pluralsight.ui.forms.dto.SandwichDto;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -14,7 +14,7 @@ import java.util.List;
 public class AddSaucesScreen {
     private final IMenuRepository menuRepository = MenuRepository.getInstance();
 
-    public void addSauces(SandwichDto sandwich) {
+    public void addSauces(CustomSandwich sandwich) {
         List<Sauce> sauces = new LinkedList<>(menuRepository.getSauces());
         removeAlreadyAddedSauces(sauces, sandwich);
 
@@ -24,7 +24,7 @@ public class AddSaucesScreen {
             Sauce selectedSauce = getSelectedSauce(sauces);
             if (selectedSauce == null) break;
 
-            sandwich.addSauce(selectedSauce.getName());
+            sandwich.addSauce(selectedSauce);
             sauces.remove(selectedSauce);
             ScreenUtils.cls();
             ScreenUtils.printlnWithMargins("Sauce added: " + selectedSauce.getName());
@@ -40,7 +40,7 @@ public class AddSaucesScreen {
         return sauces.get(selection - 1);
     }
 
-    private void removeAlreadyAddedSauces(List<Sauce> sauces, SandwichDto sandwich) {
+    private void removeAlreadyAddedSauces(List<Sauce> sauces, CustomSandwich sandwich) {
         sauces.removeIf(sauce -> sandwich.getSauces().stream()
                 .anyMatch(addedSauce -> addedSauce.equals(sauce.getName())));
     }

@@ -1,5 +1,6 @@
 package com.pluralsight.service;
 
+import com.pluralsight.model.order.Order;
 import com.pluralsight.ui.entryexit.SeeYouScreen;
 import com.pluralsight.ui.entryexit.WelcomeScreen;
 import com.pluralsight.ui.menu.AddSandwichScreenMenu;
@@ -21,44 +22,48 @@ public class AppCoordinator {
         while (true) {
             HomeScreenMenu.print();
             int option = ScreenUtils.askForMenuOptionsInput(HomeScreenMenu.amountOfOptions());
-            performAction(option, HomeScreenMenu.MenuOption.class);
+            performAction(option, HomeScreenMenu.MenuOption.class, null);
         }
     }
 
     public static void orderScreenFlow() {
+        Order order = new Order();
         while (true) {
             OrderScreenMenu.print();
             int option = ScreenUtils.askForMenuOptionsInput(OrderScreenMenu.amountOfOptions());
-            performAction(option, OrderScreenMenu.MenuOption.class);
+            performAction(option, OrderScreenMenu.MenuOption.class, order);
         }
     }
 
-    public static void addSandwichFlow() {
+    public static void addSandwichFlow(Order order) {
         while (true) {
             AddSandwichScreenMenu.print();
             int option = ScreenUtils.askForMenuOptionsInput(AddSandwichScreenMenu.amountOfOptions());
-            performAction(option, AddSandwichScreenMenu.MenuOption.class);
+            performAction(option, AddSandwichScreenMenu.MenuOption.class, order);
         }
     }
 
-    public static <T extends Enum<T> & MenuEntry> void performAction(int option, Class<T> menu) {
-        T menuOption = Arrays.stream(menu.getEnumConstants())
+    private static <M, T extends Enum<T> & MenuEntry<M>> void performAction(int option, Class<T> menu,
+                                                                            M context) {
+        T menuOption = getMenuOption(option, menu);
+        ScreenUtils.cls();
+        if (menuOption == null) {
+            System.out.println("Invalid option. Please try again.");
+            return;
+        }
+        menuOption.getAction().accept(context);
+    }
+
+
+    private static <M, T extends Enum<T> & MenuEntry<M>> T getMenuOption(int option, Class<T> menu) {
+        return Arrays.stream(menu.getEnumConstants())
                 .filter(entry -> entry.getValue() == option)
                 .findFirst()
                 .orElse(null);
-        if (menuOption != null) {
-            ScreenUtils.cls();
-            menuOption.getAction().run();
-        } else {
-            System.out.println("Invalid option. Please try again.");
-        }
-        ScreenUtils.cls();
     }
 
     public static void exit() {
         SeeYouScreen.print();
         System.exit(0);
     }
-
-
 }

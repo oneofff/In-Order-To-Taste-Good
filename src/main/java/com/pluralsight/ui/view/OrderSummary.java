@@ -1,5 +1,7 @@
 package com.pluralsight.ui.view;
 
+import com.pluralsight.model.order.Order;
+
 public class OrderSummary {
     public static void mock() {
         System.out.println("Order Summary:");
@@ -8,5 +10,9 @@ public class OrderSummary {
         System.out.println("3. Candy: $1.00");
         System.out.println("Total: $5.00");
         System.out.println("Thank you for your order!");
+    }
+
+    public static void mock(Order order) {
+
     }
 }

@@ -1,8 +1,10 @@
 package com.pluralsight.model.order;
 
+import java.util.List;
+
 public abstract class OrderItem {
 
-    public abstract String getDescription();
+    public abstract List<String> getRepresentation();
 
-    public abstract double getPrice();
+    public abstract double getTotalPrice();
 }

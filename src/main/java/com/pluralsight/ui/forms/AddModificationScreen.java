@@ -1,8 +1,8 @@
 package com.pluralsight.ui.forms;
 
+import com.pluralsight.model.sandwich.CustomSandwich;
 import com.pluralsight.repository.IMenuRepository;
 import com.pluralsight.repository.MenuRepository;
-import com.pluralsight.ui.forms.dto.SandwichDto;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -11,7 +11,7 @@ public class AddModificationScreen {
 
     private final IMenuRepository menuRepository = MenuRepository.getInstance();
 
-    public void addModification(SandwichDto sandwich) {
+    public void addModification(CustomSandwich sandwich) {
 
         boolean running = true;
         while (running) {

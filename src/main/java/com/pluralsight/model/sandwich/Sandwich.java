@@ -10,8 +10,9 @@ import java.util.List;
 @Data
 public abstract class Sandwich extends OrderItem {
     private String name;
-    private String breadType;
+    private String bread;
     private boolean toasted;
-    private List<Topping> toppings;
+    private List<PremiumTopping> premiumToppings;
+    private List<RegularTopping> toppings;
     private List<Sauce> sauces;
 }

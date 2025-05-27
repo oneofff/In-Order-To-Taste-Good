@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class HomeScreenMenu {
 
@@ -21,13 +22,13 @@ public class HomeScreenMenu {
 
     @Getter
     @RequiredArgsConstructor
-    public enum MenuOption implements MenuEntry {
-        NEW_ORDER(1, "New order", AppCoordinator::orderScreenFlow),
-        EXIT(0, "Exit", AppCoordinator::exit);
+    public enum MenuOption implements MenuEntry<Void> {
+        NEW_ORDER(1, "New order", (Void v) -> AppCoordinator.orderScreenFlow()),
+        EXIT(0, "Exit", (Void v) -> AppCoordinator.exit());
 
         private final int value;
         private final String name;
-        private final Runnable action;
+        private final Consumer<Void> action;
 
         public String getRepresentation() {
             return value + ". " + name;

@@ -1,8 +1,10 @@
 package com.pluralsight.ui.forms;
 
+import com.pluralsight.model.order.Order;
+import com.pluralsight.model.sandwich.CustomSandwich;
 import com.pluralsight.repository.IMenuRepository;
 import com.pluralsight.repository.MenuRepository;
-import com.pluralsight.ui.forms.dto.SandwichDto;
+import com.pluralsight.service.SandwichService;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -11,24 +13,26 @@ import java.util.List;
 
 public class AddCustomSandwichScreen {
     private final IMenuRepository menuRepository = MenuRepository.getInstance();
+    private final SandwichService sandwichService = new SandwichService();
 
-    public void addCustomSandwich() {
-        SandwichDto sandwich = buildSandwich();
+    public void addCustomSandwich(Order order) {
+        CustomSandwich sandwich = buildSandwich();
 
         boolean addToOrder = isAddToOrder(sandwich);
-
+        ScreenUtils.cls();
         if (addToOrder) {
-
-            ScreenUtils.printOnCenterOfTheScreen("Your custom sandwich has been added to your order.");
-
+            sandwichService.addCustomSandwichToOrder(order, sandwich);
+            ScreenUtils.printOnCenterOfTheScreen("Your sandwich was added.");
+            ScreenUtils.printBox(order.getOrderDetails());
         } else {
-            ScreenUtils.cls();
-            ScreenUtils.printOnCenterOfTheScreen("Your custom sandwich was not added to your order.");
+            ScreenUtils.printOnCenterOfTheScreen("Your sandwich was not added to the order.");
+            ScreenUtils.printBox(sandwich.getRepresentation());
         }
+        ScreenUtils.waitTillPressEnter();
     }
 
-    private SandwichDto buildSandwich() {
-        SandwichDto sandwich = new SandwichDto();
+    private CustomSandwich buildSandwich() {
+        CustomSandwich sandwich = new CustomSandwich();
 
         sandwich.setSizeName(selectSandwichSize());
         sandwich.setBasePrice(menuRepository.getCustomSandwichPricesBySize().get(sandwich.getSizeName()));
@@ -50,7 +54,7 @@ public class AddCustomSandwichScreen {
         return isToasted;
     }
 
-    private static boolean isAddToOrder(SandwichDto sandwich) {
+    private static boolean isAddToOrder(CustomSandwich sandwich) {
         ScreenUtils.printOnCenterOfTheScreen("Your custom sandwich");
         ScreenUtils.printBox(sandwich.getRepresentation());
         ScreenUtils.printOnCenterOfTheScreen("");
@@ -81,6 +85,5 @@ public class AddCustomSandwichScreen {
         ScreenUtils.cls();
         return sizeName;
     }
-
 
 }

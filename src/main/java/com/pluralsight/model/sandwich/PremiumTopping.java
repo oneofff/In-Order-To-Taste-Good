@@ -1,18 +1,27 @@
 package com.pluralsight.model.sandwich;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
+@AllArgsConstructor
+@SuperBuilder
 public class PremiumTopping extends Topping {
-
-    private String type;
+    private String category;
     private double basePrice;
     private double extraPrice;
     private String size;
     private boolean isExtra;
 
-    @Override
-    public double getPrice(String size) {
+    public String getRepresentation() {
+        return String.format("- %s, %s $%.2f",
+                getName(), isExtra ? "Extra" : "Regular", getTotalPrice());
+    }
+
+    public double getTotalPrice() {
         return basePrice + (isExtra ? extraPrice : 0.0);
     }
 }

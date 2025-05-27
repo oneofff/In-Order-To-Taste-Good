@@ -16,10 +16,6 @@ public class PremiumToppingsCategory {
     private Map<String, Double> basePricesBySize;
     private Map<String, Double> extraPricesBySize;
 
-    public PremiumToppingsCategory(List<PremiumToppingsCategory> premiumToppingsCategories) {
-
-    }
-
 
     public double getPrice(String size) {
         return basePricesBySize.getOrDefault(size, 0.0) + extraPricesBySize.getOrDefault(size, 0.0);

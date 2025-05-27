@@ -4,6 +4,8 @@ import com.pluralsight.model.order.OrderItem;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class Chips extends OrderItem {
@@ -12,12 +14,12 @@ public class Chips extends OrderItem {
     private double price;
 
     @Override
-    public String getDescription() {
-        return name;
+    public List<String> getRepresentation() {
+        return List.of();
     }
 
     @Override
-    public double getPrice() {
-        return price;
+    public double getTotalPrice() {
+        return 0;
     }
 }

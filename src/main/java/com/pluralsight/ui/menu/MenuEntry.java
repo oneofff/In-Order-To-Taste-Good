@@ -1,7 +1,9 @@
 package com.pluralsight.ui.menu;
 
-public interface MenuEntry {
+import java.util.function.Consumer;
+
+public interface MenuEntry<T> {
     int getValue();
 
-    Runnable getAction();
+    Consumer<T> getAction();
 }

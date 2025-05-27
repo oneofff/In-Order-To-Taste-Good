@@ -49,7 +49,7 @@ public final class ConsoleStringReader {
 
     public static <T> int getIntInRangeOfCollection(List<T> collection, boolean isZeroExitOption) {
         int rangeStart = isZeroExitOption ? 0 : 1;
-        return getIntInRangeWithMargin(rangeStart, collection.size() + (isZeroExitOption ? 1 : 0));
+        return getIntInRangeWithMargin(rangeStart, collection.size());
     }
 
     public static String getStringWithMargin() {

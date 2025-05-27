@@ -18,20 +18,30 @@ public class AddPremiumToppingsScreen {
     private final IMenuRepository menuRepository = MenuRepository.getInstance();
 
     public void addPremiumToppings(SandwichDto sandwich) {
-        List<PremiumToppingsCategory> availablePremiumToppingsCategories = new LinkedList<>(menuRepository.getPremiumToppingsCategories());
+        var availablePremiumToppingsCategories = new LinkedList<>(menuRepository.getPremiumToppingsCategories());
 
-        // Remove toppings that are already added to the sandwich
         removeAlreadyAddedToppings(availablePremiumToppingsCategories, sandwich);
+
+        while (!availablePremiumToppingsCategories.isEmpty()) {
+            PremiumToppingDto topping = addPremiumToppingFlow(availablePremiumToppingsCategories, sandwich);
+            if (topping != null) sandwich.addPremiumTopping(topping);
+            else break;
+            availablePremiumToppingsCategories.removeIf(category -> category.getToppings().isEmpty());
+        }
+
+    }
+
+    private PremiumToppingDto addPremiumToppingFlow(LinkedList<PremiumToppingsCategory> availablePremiumToppingsCategories, SandwichDto sandwich) {
 
         printPremiumToppingsMenu(availablePremiumToppingsCategories, sandwich.getSizeName());
 
         PremiumToppingsCategory category = getPremiumToppingCategory(availablePremiumToppingsCategories);
         ScreenUtils.cls();
-
-        if (category == null) return;
-
-        PremiumToppingDto toppingDto = getSelectedTopping(category, sandwich);
-        if (toppingDto != null) sandwich.addPremiumTopping(toppingDto);
+        if (category == null) return null;
+        PremiumToppingDto selectedTopping = getSelectedTopping(category, sandwich);
+        if (selectedTopping == null) return null;
+        category.getToppings().remove(selectedTopping.getName());
+        return selectedTopping;
     }
 
     private void removeAlreadyAddedToppings(List<PremiumToppingsCategory> availablePremiumToppingsCategories, SandwichDto sandwich) {
@@ -40,9 +50,10 @@ public class AddPremiumToppingsScreen {
             alreadyAddedToppings.add(topping.getName());
         }
 
-        availablePremiumToppingsCategories.forEach(c -> {
-            c.getToppings().removeIf(alreadyAddedToppings::contains);
+        availablePremiumToppingsCategories.forEach(category -> {
+            category.getToppings().removeIf(alreadyAddedToppings::contains);
         });
+        availablePremiumToppingsCategories.removeIf(category -> category.getToppings().isEmpty());
     }
 
     private PremiumToppingsCategory getPremiumToppingCategory(List<PremiumToppingsCategory> availablePremiumToppingsCategories) {

@@ -3,6 +3,7 @@ package com.pluralsight.repository;
 import com.pluralsight.model.menu.Menu;
 import com.pluralsight.model.menu.PremiumToppingsCategory;
 import com.pluralsight.model.sandwich.RegularTopping;
+import com.pluralsight.model.sandwich.Sauce;
 import com.pluralsight.model.sandwich.SignatureSandwich;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface IMenuRepository {
 
     List<String> getBreadOptions();
 
-    Map<String, Double> getSandwichSizes();
+    Map<String, Double> getCustomSandwichPricesBySize();
 
     List<PremiumToppingsCategory> getPremiumToppingsCategories();
 
@@ -22,4 +23,6 @@ public interface IMenuRepository {
     List<String> getSandwichAvailableModificationTypes();
 
     List<RegularTopping> getRegularToppings();
+
+    List<Sauce> getSauces();
 }

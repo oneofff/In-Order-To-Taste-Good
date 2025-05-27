@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pluralsight.model.menu.Menu;
 import com.pluralsight.model.menu.PremiumToppingsCategory;
 import com.pluralsight.model.sandwich.RegularTopping;
+import com.pluralsight.model.sandwich.Sauce;
 import com.pluralsight.model.sandwich.SignatureSandwich;
 
 import java.io.File;
@@ -30,37 +31,42 @@ public class MenuRepository implements IMenuRepository {
 
     @Override
     public Menu getAllMenu() {
-        return this.menu;
+        return new Menu(menu);
     }
 
     @Override
     public List<String> getBreadOptions() {
-        return menu.getBreadOptions();
+        return List.copyOf(menu.getBreadOptions());
     }
 
     @Override
-    public Map<String, Double> getSandwichSizes() {
-        return menu.getCustomSandwichSizePrices();
+    public Map<String, Double> getCustomSandwichPricesBySize() {
+        return Map.copyOf(menu.getCustomSandwichSizePrices());
     }
 
     @Override
     public List<PremiumToppingsCategory> getPremiumToppingsCategories() {
-        return menu.getPremiumToppingsCategories();
+        return List.copyOf(menu.getPremiumToppingsCategories());
     }
 
     @Override
     public List<SignatureSandwich> getSignatureSandwiches() {
-        return menu.getSignatureSandwiches();
+        return List.copyOf(menu.getSignatureSandwiches());
     }
 
     @Override
     public List<String> getSandwichAvailableModificationTypes() {
-        return menu.getSandwichAvailableModificationTypes();
+        return List.copyOf(menu.getSandwichAvailableModificationTypes());
     }
 
     @Override
     public List<RegularTopping> getRegularToppings() {
-        return menu.getRegularToppings();
+        return List.copyOf(menu.getRegularToppings());
+    }
+
+    @Override
+    public List<Sauce> getSauces() {
+        return List.copyOf(menu.getSauces());
     }
 
     public Menu loadMenu(String jsonPath) {

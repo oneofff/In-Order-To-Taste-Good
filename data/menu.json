@@ -38,10 +38,10 @@
     "RegularToppings",
     "Sauces"
   ],
-  "premiumToppingsMenus": [
+  "premiumToppingsCategories": [
     {
       "name": "Meats",
-      "types": [
+      "toppings": [
         "Steak",
         "Ham",
         "Salami",
@@ -62,7 +62,7 @@
     },
     {
       "name": "Cheese",
-      "types": [
+      "toppings": [
         "American",
         "Provolone",
         "Cheddar",

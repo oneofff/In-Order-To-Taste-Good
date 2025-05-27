@@ -16,7 +16,7 @@ public class Menu {
     private List<SignatureSandwich> signatureSandwiches;
     private Map<String, Double> customSandwichSizePrices;
     private List<String> breadOptions;
-    private List<PremiumToppingsMenu> premiumToppingsMenus;
+    private List<PremiumToppingsCategory> premiumToppingsCategories;
     private List<RegularTopping> regularToppings;
     private List<Drink> drinkOptions;
     private List<Sauce> sauces;

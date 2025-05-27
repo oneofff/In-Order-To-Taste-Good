@@ -1,7 +1,7 @@
 package com.pluralsight.repository;
 
 import com.pluralsight.model.menu.Menu;
-import com.pluralsight.model.menu.PremiumToppingsMenu;
+import com.pluralsight.model.menu.PremiumToppingsCategory;
 import com.pluralsight.model.sandwich.RegularTopping;
 import com.pluralsight.model.sandwich.SignatureSandwich;
 
@@ -15,7 +15,7 @@ public interface IMenuRepository {
 
     Map<String, Double> getSandwichSizes();
 
-    List<PremiumToppingsMenu> getPremiumToppings();
+    List<PremiumToppingsCategory> getPremiumToppingsCategories();
 
     List<SignatureSandwich> getSignatureSandwiches();
 

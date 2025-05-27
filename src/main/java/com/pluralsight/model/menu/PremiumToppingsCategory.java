@@ -10,11 +10,15 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PremiumToppingsMenu {
+public class PremiumToppingsCategory {
     private String name;
-    private List<String> types;
+    private List<String> toppings;
     private Map<String, Double> basePricesBySize;
     private Map<String, Double> extraPricesBySize;
+
+    public PremiumToppingsCategory(List<PremiumToppingsCategory> premiumToppingsCategories) {
+
+    }
 
 
     public double getPrice(String size) {

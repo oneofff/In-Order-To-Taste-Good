@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -13,14 +15,14 @@ public class SandwichDto {
     private Double basePrice;
     private String sizeName;
     private String bread;
-    private List<PremiumToppingDto> premiumToppingsMenus;
-    private List<RegularTopping> regularToppings;
-    private List<String> sauces;
+    private List<PremiumToppingDto> premiumToppings = new LinkedList<>();
+    private List<RegularTopping> regularToppings = new LinkedList<>();
+    private List<String> sauces = new LinkedList<>();
 
     public void addPremiumTopping(PremiumToppingDto topping) {
-        if (premiumToppingsMenus == null)
-            premiumToppingsMenus = new LinkedList<>();
-        premiumToppingsMenus.add(topping);
+        if (premiumToppings == null)
+            premiumToppings = new LinkedList<>();
+        premiumToppings.add(topping);
     }
 
     public List<String> getRepresentation() {
@@ -31,10 +33,15 @@ public class SandwichDto {
         representation.add("Base Price: $" + basePrice);
         representation.add("");
 
-        if (premiumToppingsMenus != null && !premiumToppingsMenus.isEmpty()) {
+        if (premiumToppings != null && !premiumToppings.isEmpty()) {
             representation.add("Premium Toppings:");
-            for (PremiumToppingDto topping : premiumToppingsMenus) {
-                representation.add(topping.getRepresentation());
+            Map<String, List<PremiumToppingDto>> categorizedToppings = premiumToppings.stream()
+                    .collect(Collectors.groupingBy(PremiumToppingDto::getCategory));
+            for (var entry : categorizedToppings.entrySet()) {
+                representation.add(entry.getKey() + ":");
+                for (PremiumToppingDto topping : entry.getValue()) {
+                    representation.add(topping.getRepresentation());
+                }
             }
         }
         representation.add("");
@@ -63,14 +70,15 @@ public class SandwichDto {
 
 
     private Double getTotalPrice() {
-        return premiumToppingsMenus.stream()
+        return premiumToppings.stream()
                 .mapToDouble(PremiumToppingDto::getTotalPrice)
-                .sum();
+                .sum()
+                + basePrice;
     }
 
     private Double getPremiumToppingsTotalPrice() {
-        return premiumToppingsMenus.stream()
-                .mapToDouble(PremiumToppingDto::getBasePrice)
+        return premiumToppings.stream()
+                .mapToDouble(t -> t.getBasePrice() + t.getExtraPrice())
                 .sum();
     }
 }

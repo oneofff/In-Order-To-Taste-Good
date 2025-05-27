@@ -8,16 +8,16 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class PremiumToppingDto {
+    private String category;
     private String name;
-    private String type;
     private double basePrice;
     private double extraPrice;
     private String size;
     private boolean isExtra;
 
     public String getRepresentation() {
-        return String.format("-%s (%s), Size: %s $%.2f",
-                name, type, isExtra ? " Extra" : "Regular", getTotalPrice());
+        return String.format("- %s, %s $%.2f",
+                name, isExtra ? "Extra" : "Regular", getTotalPrice());
     }
 
     public double getTotalPrice() {

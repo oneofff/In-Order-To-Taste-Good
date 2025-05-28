@@ -55,7 +55,7 @@ public class AddSignatureSandwichScreen {
         if (confirmAddToOrder(picked)) {
             order.addItem(picked);
             ScreenUtils.printOnCenterOfTheScreen(
-                    "Signature sandwich '" + picked.getName() + "' added to your order.");
+                    "Signature sandwich '" + picked.getName() + "' added.");
         } else {
             showNotAddedMessage(picked);
 

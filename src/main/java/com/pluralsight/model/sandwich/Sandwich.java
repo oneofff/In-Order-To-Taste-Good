@@ -80,16 +80,12 @@ public abstract class Sandwich extends OrderItem {
     public List<String> getShortRepresentation() {
         List<String> out = new LinkedList<>();
 
-        out.add("Sandwich: " + getName() + " " + getSize() + String.format(" %s %s",
+        out.add("Sandwich: " + getName() + " - " + getSize());
+
+
+        out.add(String.format("Bread: %s, %s",
                 getBread(),
-                isToasted() ? "Toasted" : ""));
-
-
-//        out.add(String.format("%s %s%s  - $%.2f",
-//                size,
-//                getBread(),
-//                isToasted() ? " Toasted" : "",
-//                basePrice));
+                isToasted() ? " Toasted" : ""));
 
 
         if (getAllPremiumToppings() != null && !getAllPremiumToppings().isEmpty()) {

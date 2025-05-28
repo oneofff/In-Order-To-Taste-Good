@@ -164,16 +164,28 @@
   ],
   "drinkOptions": [
     {
-      "name": "Small",
-      "price": 2.0
+      "name": "Coke",
+      "sizePrices": {
+        "Small": 2.0,
+        "Medium": 2.5,
+        "Large": 3.0
+      }
     },
     {
-      "name": "Medium",
-      "price": 2.5
+      "name": "Sprite",
+      "sizePrices": {
+        "Small": 2.0,
+        "Medium": 2.5,
+        "Large": 3.0
+      }
     },
     {
-      "name": "Large",
-      "price": 3.0
+      "name": "Water",
+      "sizePrices": {
+        "Small": 1.0,
+        "Medium": 1.5,
+        "Large": 2.0
+      }
     }
   ],
   "sauces": [

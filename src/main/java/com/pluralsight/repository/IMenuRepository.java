@@ -1,5 +1,6 @@
 package com.pluralsight.repository;
 
+import com.pluralsight.model.menu.DrinkCategory;
 import com.pluralsight.model.menu.Menu;
 import com.pluralsight.model.menu.PremiumToppingsCategory;
 import com.pluralsight.model.sandwich.RegularTopping;
@@ -25,4 +26,6 @@ public interface IMenuRepository {
     List<RegularTopping> getRegularToppings();
 
     List<Sauce> getSauces();
+
+    List<DrinkCategory> getDrinkOptions();
 }

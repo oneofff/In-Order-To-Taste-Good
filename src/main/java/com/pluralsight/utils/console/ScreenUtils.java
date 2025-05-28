@@ -8,6 +8,7 @@ public final class ScreenUtils {
     private static final int SCREEN_HEIGHT_LINES = 20;
     private static final int DEFAULT_BORDER_LENGTH = 52;
     private static final int INNER_WIDTH = DEFAULT_BORDER_LENGTH - 2;
+    private static final int SCREEN_WIDTH = 167;
 
     public static void printBox(List<String> lines, List<String> additionalLinesToTheRight) {
         String border = buildBorder();
@@ -17,11 +18,13 @@ public final class ScreenUtils {
         int amountOfEmptyLines = (SCREEN_HEIGHT_LINES - contentLength - 2) / 2;
         printEmptyLinesOnTop(amountOfEmptyLines);
 
-        int rows = Math.max(lines.size(), additionalLinesToTheRight.size());
+        int blockPad = leftPadForBlock(lines);
 
+        int rows = Math.max(lines.size(), additionalLinesToTheRight.size());
         for (int i = 0; i < rows; i++) {
+
             String inside = (i < lines.size())
-                    ? "|" + center(lines.get(i), INNER_WIDTH) + "|"
+                    ? "|" + renderRow(lines.get(i), blockPad, INNER_WIDTH) + "|"
                     : "|" + " ".repeat(INNER_WIDTH) + "|";
 
             String extra = (i < additionalLinesToTheRight.size())
@@ -38,6 +41,21 @@ public final class ScreenUtils {
         evenFromTheBottom(contentLength + 2 + amountOfEmptyLines);
     }
 
+    private static int leftPadForBlock(List<String> lines) {
+        int max = lines.stream()
+                .mapToInt(String::length)
+                .max()
+                .orElse(0);
+        max = Math.min(max, INNER_WIDTH);
+        return (INNER_WIDTH - max) / 2;
+    }
+
+    private static String renderRow(String txt, int pad, int width) {
+        if (txt.length() > width - pad)
+            txt = txt.substring(0, width - pad);
+        int trailing = width - pad - txt.length();
+        return " ".repeat(pad) + txt + " ".repeat(trailing);
+    }
 
     public static void printBox(List<String> lines) {
         printBox(lines, new LinkedList<>());
@@ -52,7 +70,6 @@ public final class ScreenUtils {
 
     private static void printEmptyLinesOnBottom(int amountOfEmptyLines) {
         int printOnBottom = amountOfEmptyLines / 2;
-        // print empty lines on bottom in the box
         for (int i = 0; i < printOnBottom; i++) {
             printlnWithMargins("|" + " ".repeat(INNER_WIDTH) + "|");
         }
@@ -65,17 +82,6 @@ public final class ScreenUtils {
             printlnWithMargins("|" + " ".repeat(INNER_WIDTH) + "|");
         }
     }
-
-    private static String center(String text, int width) {
-        if (text.length() >= width) {
-            return text.substring(0, width);
-        }
-        int padding = width - text.length();
-        int left = padding / 2;
-        int right = padding - left;
-        return " ".repeat(left) + text + " ".repeat(right);
-    }
-
 
     public static void waitTillPressEnter() {
         printOnCenterOfTheScreen("Press Enter to continue...");
@@ -106,7 +112,8 @@ public final class ScreenUtils {
     }
 
     public static void printOnCenterOfTheScreen(String message) {
-        System.out.println("\t".repeat(18) + message);
+        int startPosition = (SCREEN_WIDTH - message.length()) / 2;
+        System.out.println(" ".repeat(startPosition) + message);
     }
 
     public static void cls() {

@@ -2,6 +2,7 @@ package com.pluralsight.ui.forms;
 
 import com.pluralsight.model.sandwich.RegularTopping;
 import com.pluralsight.model.sandwich.Sandwich;
+import com.pluralsight.model.sandwich.SignatureSandwich;
 import com.pluralsight.repository.IMenuRepository;
 import com.pluralsight.repository.MenuRepository;
 import com.pluralsight.utils.console.CollectionFormatter;
@@ -60,6 +61,12 @@ public class AddRegularToppingsScreen {
         HashSet<String> alreadyAddedToppings = new HashSet<>();
         for (RegularTopping topping : sandwich.getRegularToppings()) {
             alreadyAddedToppings.add(topping.getName());
+        }
+
+        if (sandwich instanceof SignatureSandwich signatureSandwich) {
+            alreadyAddedToppings.addAll(signatureSandwich.getIncludedRegularToppings().stream()
+                    .map(RegularTopping::getName)
+                    .toList());
         }
 
         availableRegularToppings.removeIf(topping -> alreadyAddedToppings.contains(topping.getName()));

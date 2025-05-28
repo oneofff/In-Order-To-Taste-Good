@@ -2,6 +2,7 @@ package com.pluralsight.ui.forms;
 
 import com.pluralsight.model.sandwich.Sandwich;
 import com.pluralsight.model.sandwich.Sauce;
+import com.pluralsight.model.sandwich.SignatureSandwich;
 import com.pluralsight.repository.IMenuRepository;
 import com.pluralsight.repository.MenuRepository;
 import com.pluralsight.utils.console.CollectionFormatter;
@@ -42,6 +43,11 @@ public class AddSaucesScreen {
     private void removeAlreadyAddedSauces(List<Sauce> sauces, Sandwich sandwich) {
         sauces.removeIf(sauce -> sandwich.getSauces().stream()
                 .anyMatch(addedSauce -> addedSauce.getName().equals(sauce.getName())));
+
+        if (sandwich instanceof SignatureSandwich signatureSandwich) {
+            sauces.removeIf(sauce -> signatureSandwich.getIncludedSauces().stream()
+                    .anyMatch(addedSauce -> addedSauce.getName().equals(sauce.getName())));
+        }
     }
 
     private void printAvailableSauces(List<Sauce> sauces, List<String> sandwichRepresentation) {

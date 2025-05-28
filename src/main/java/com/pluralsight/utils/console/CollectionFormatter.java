@@ -1,20 +1,24 @@
 package com.pluralsight.utils.console;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class CollectionFormatter {
 
     public static <T, L> List<String> mapToIndexedList(Map<T, L> sizes) {
-        List<String> out = new ArrayList<>();
-        int i = 1;
-        for (Map.Entry<T, L> e : sizes.entrySet()) {
-            out.add(String.format("%d. %s $%s", i++, e.getKey(), e.getValue()));
-        }
-        return out;
+        AtomicInteger idx = new AtomicInteger(1);
+        return sizes.entrySet().stream()
+                .sorted(Comparator.comparingInt(e ->
+                        Integer.parseInt(e.getKey().toString().replaceAll("\\D", ""))))
+                .map(e -> String.format("%d. %s $%.2f",
+                        idx.getAndIncrement(),
+                        e.getKey(), e.getValue()))
+                .collect(Collectors.toList());
     }
 
     private static <T> List<String> listToIndexedList(List<T> list) {

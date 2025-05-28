@@ -1,6 +1,7 @@
 package com.pluralsight.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pluralsight.model.extras.Chips;
 import com.pluralsight.model.menu.DrinkCategory;
 import com.pluralsight.model.menu.Menu;
 import com.pluralsight.model.menu.PremiumToppingsCategory;
@@ -73,6 +74,11 @@ public class MenuRepository implements IMenuRepository {
     @Override
     public List<DrinkCategory> getDrinkOptions() {
         return List.copyOf(menu.getDrinkOptions());
+    }
+
+    @Override
+    public List<Chips> getChipsOptions() {
+        return List.copyOf(menu.getChipsOptions());
     }
 
     public Menu loadMenu(String jsonPath) {

@@ -216,7 +216,19 @@
   ],
   "chipsOptions": [
     {
-      "name": "Regular",
+      "name": "Lay's Classic",
+      "price": 1.5
+    },
+    {
+      "name": "Doritos Nacho Cheese",
+      "price": 1.5
+    },
+    {
+      "name": "Pringles Original",
+      "price": 1.5
+    },
+    {
+      "name": "Sun Chips Garden Salsa",
       "price": 1.5
     }
   ]

@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CustomSandwich extends Sandwich {
 
-
 }
 

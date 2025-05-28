@@ -1,5 +1,6 @@
 package com.pluralsight.repository;
 
+import com.pluralsight.model.extras.Chips;
 import com.pluralsight.model.menu.DrinkCategory;
 import com.pluralsight.model.menu.Menu;
 import com.pluralsight.model.menu.PremiumToppingsCategory;
@@ -28,4 +29,6 @@ public interface IMenuRepository {
     List<Sauce> getSauces();
 
     List<DrinkCategory> getDrinkOptions();
+
+    List<Chips> getChipsOptions();
 }

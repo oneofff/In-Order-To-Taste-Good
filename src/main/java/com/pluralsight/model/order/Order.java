@@ -5,11 +5,13 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @Data
 public class Order {
     private LocalDateTime orderDate;
-    private List<OrderItem> items = new LinkedList<>();
+    private SortedSet<OrderItem> items = new TreeSet<>((OrderItem::compareTo));
 
     public double getTotalPrice() {
         return items.stream()
@@ -27,10 +29,11 @@ public class Order {
 
     public List<String> getOrderDetails() {
         List<String> details = new LinkedList<>();
-        details.add("Items in Order:");
+        details.add("Your order:");
+        details.add("-".repeat(10));
         for (OrderItem item : items) {
             details.addAll(item.getShortRepresentation());
-            details.add("");
+            details.add("-".repeat(10));
         }
         details.add(String.format("Total Price: %.2f", getTotalPrice()));
         return details;

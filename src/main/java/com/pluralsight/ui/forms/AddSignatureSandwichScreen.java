@@ -46,7 +46,9 @@ public class AddSignatureSandwichScreen {
                 s -> String.format("%s - $%.2f", s.getName(), s.getBasePrice()),
                 "Back to Add Sandwich Menu"
         ));
-        return ConsoleStringReader.getIntInRangeOfCollection(menu, true);
+        int choice = ConsoleStringReader.getIntInRangeOfCollection(menu, true);
+        ScreenUtils.cls();
+        return choice;
     }
 
     private void processSelection(Order order, SignatureSandwich picked) {
@@ -60,7 +62,7 @@ public class AddSignatureSandwichScreen {
             showNotAddedMessage(picked);
 
         }
-        ScreenUtils.printBox(order.getOrderDetails());
+        ScreenUtils.printBox(order.getOrderRepresentation());
         ScreenUtils.waitTillPressEnter();
         ScreenUtils.cls();
     }

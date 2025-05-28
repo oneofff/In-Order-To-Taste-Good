@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileWriterUtils implements AutoCloseable {
-    private final BufferedWriter bufferedWriter;
+    private BufferedWriter bufferedWriter;
 
     public FileWriterUtils(String file) {
         try {
@@ -22,6 +22,9 @@ public class FileWriterUtils implements AutoCloseable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public FileWriterUtils() {
     }
 
     public void writeLine(String line) {

@@ -4,7 +4,7 @@ import com.pluralsight.model.order.Order;
 import com.pluralsight.service.AppCoordinator;
 import com.pluralsight.ui.forms.AddChipsScreen;
 import com.pluralsight.ui.forms.AddDrinkScreen;
-import com.pluralsight.ui.view.OrderSummary;
+import com.pluralsight.ui.forms.CheckoutScreen;
 import com.pluralsight.utils.console.ScreenUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,7 +33,7 @@ public class OrderScreenMenu {
         ADD_SANDWICH(1, "Add sandwich", AppCoordinator::addSandwichFlow),
         ADD_DRINKS(2, "Add drinks", new AddDrinkScreen()::addDrink),
         ADD_CHIPS(3, "Add chips", AddChipsScreen::addChips),
-        CHECKOUT(4, "Checkout", OrderSummary::mock),
+        CHECKOUT(4, "Checkout", new CheckoutScreen()::checkout),
         CANCEL_ORDER(0, "Cancel Order", (Order o) -> AppCoordinator.homeScreenFlow());
 
         private final int value;

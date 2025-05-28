@@ -50,7 +50,7 @@ public class AddChipsScreen {
             order.addItem(selected);
             ScreenUtils.printOnCenterOfTheScreen(
                     String.format("%s chips added successfully!", selected.getName()));
-            ScreenUtils.printBox(order.getOrderDetails());
+            ScreenUtils.printBox(order.getOrderRepresentation());
         } else {
             ScreenUtils.printOnCenterOfTheScreen(
                     String.format("%s chips were not added.", selected.getName()));

@@ -28,9 +28,13 @@ public class AppCoordinator {
 
     public static void orderScreenFlow() {
         Order order = new Order();
-        while (true) {
+        boolean running = true;
+        while (running) {
             OrderScreenMenu.print();
             int option = ScreenUtils.askForMenuOptionsInput(OrderScreenMenu.amountOfOptions());
+            if (option == OrderScreenMenu.MenuOption.CHECKOUT.getValue()) {
+                running = false;
+            }
             performAction(option, OrderScreenMenu.MenuOption.class, order);
         }
     }

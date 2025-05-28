@@ -57,7 +57,7 @@ public class AddDrinkScreen {
         order.addItem(drinkToAdd);
         ScreenUtils.cls();
         ScreenUtils.printOnCenterOfTheScreen(String.format("%s drink added successfully!", drinkToAdd.getName())); //
-        ScreenUtils.printBox(order.getOrderDetails());
+        ScreenUtils.printBox(order.getOrderRepresentation());
         ScreenUtils.waitTillPressEnter();
         ScreenUtils.cls();
     }

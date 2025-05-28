@@ -23,7 +23,7 @@ public class AddCustomSandwichScreen {
         if (addToOrder) {
             sandwichService.addCustomSandwichToOrder(order, sandwich);
             ScreenUtils.printOnCenterOfTheScreen("Your sandwich was added.");
-            ScreenUtils.printBox(order.getOrderDetails());
+            ScreenUtils.printBox(order.getOrderRepresentation());
         } else {
             ScreenUtils.printOnCenterOfTheScreen("Your sandwich was not added to the order.");
             ScreenUtils.printBox(sandwich.getRepresentation());

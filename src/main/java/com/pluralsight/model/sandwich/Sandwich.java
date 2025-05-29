@@ -35,9 +35,9 @@ public abstract class Sandwich extends OrderItem {
             Map<String, List<PremiumTopping>> categorizedToppings = getAllPremiumToppings().stream()
                     .collect(Collectors.groupingBy(PremiumTopping::getCategory));
             for (var entry : categorizedToppings.entrySet()) {
-                representation.add(entry.getKey() + ":");
+                representation.add(" ".repeat(4) + entry.getKey() + ":");
                 for (PremiumTopping topping : entry.getValue()) {
-                    representation.add(topping.getRepresentation());
+                    representation.add(" ".repeat(4) + topping.getRepresentation());
                 }
             }
         }
@@ -51,7 +51,7 @@ public abstract class Sandwich extends OrderItem {
         if (getAllRegularToppings() != null && !getAllRegularToppings().isEmpty()) {
             representation.add("Regular Toppings:");
             for (RegularTopping topping : getAllRegularToppings()) {
-                representation.add("- " + topping.getName());
+                representation.add(" ".repeat(4) + "- " + topping.getName());
             }
         }
 
@@ -59,7 +59,7 @@ public abstract class Sandwich extends OrderItem {
         if (getAllSauces() != null && !getAllSauces().isEmpty()) {
             representation.add("Sauces:");
             for (var sauce : getAllSauces()) {
-                representation.add("- " + sauce.getName());
+                representation.add(" ".repeat(4) + "- " + sauce.getName());
             }
 
         }

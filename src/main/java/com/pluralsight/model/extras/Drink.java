@@ -20,14 +20,14 @@ public class Drink extends OrderItem {
         return List.of(
                 "Drink: " + getName(),
                 "Size: " + getSize(),
-                String.format("Price: %.2f", getPrice())
+                String.format("Price: $%.2f", getPrice())
         );
     }
 
     @Override
     public List<String> getShortRepresentation() {
         return List.of(
-                String.format("%s  %s - %.2f", getName(), getSize(), getPrice())
+                String.format("%s  %s - $%.2f", getName(), getSize(), getPrice())
         );
     }
 

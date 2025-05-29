@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class OrderService {
     private FileWriterUtils fileWriterUtils;
-    private static final String ORDER_FILE_LOCATION = "data";
+    private static final String ORDER_FILE_LOCATION = "receipts/";
 
 
     public void saveOrder(Order order) {
@@ -16,7 +16,7 @@ public class OrderService {
         }
 
         if (fileWriterUtils == null) {
-            fileWriterUtils = new FileWriterUtils(ORDER_FILE_LOCATION + "/" +
+            fileWriterUtils = new FileWriterUtils(ORDER_FILE_LOCATION +
                     order.getOrderDate()
                             .format(DateTimeFormatter.ofPattern("yyyyMMdd-hhmmss")) + ".txt");
         }

@@ -3,6 +3,7 @@ package com.pluralsight.model.order;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
@@ -66,6 +67,12 @@ public class Order {
     }
 
     public String getCheckRepresentation() {
-        return String.join("\n", getOrderCheckoutRepresentation());
+        String sb = "Order Date: " + orderDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' h:mma")) + "\n" +
+                String.join("\n", getOrderRepresentation()) +
+                "\n" +
+                "Gratuity: $" + gratuity + "\n" +
+                "Tax (" + TAX_RATE * 100 + "%): $" + getTaxAmount() + "\n" +
+                "Total Price: $" + getTotalPrice() + "\n";
+        return sb;
     }
 }

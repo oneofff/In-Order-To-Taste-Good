@@ -2,7 +2,7 @@ package com.pluralsight.ui.forms;
 
 import com.pluralsight.model.extras.Chips;
 import com.pluralsight.model.order.Order;
-import com.pluralsight.repository.IMenuRepository;
+import com.pluralsight.repository.FileMenuRepository;
 import com.pluralsight.repository.MenuRepository;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class AddChipsScreen {
 
-    private static final IMenuRepository menuRepository = MenuRepository.getInstance();
+    private static final MenuRepository menuRepository = FileMenuRepository.getInstance();
 
     public static void addChips(Order order) {
 

@@ -73,7 +73,7 @@ public class Order {
     }
 
     public String getCheckRepresentation() {
-        return "Order Date: " + orderDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' h:mma")) + "\n" +
+        return "Order Date: " + orderDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' h:mm a")) + "\n" +
                 String.join("\n", getOrderRepresentation()) +
                 "\n" +
                 String.join("\n", getCostRepresentation());

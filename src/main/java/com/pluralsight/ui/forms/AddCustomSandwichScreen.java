@@ -2,7 +2,7 @@ package com.pluralsight.ui.forms;
 
 import com.pluralsight.model.order.Order;
 import com.pluralsight.model.sandwich.CustomSandwich;
-import com.pluralsight.repository.IMenuRepository;
+import com.pluralsight.repository.FileMenuRepository;
 import com.pluralsight.repository.MenuRepository;
 import com.pluralsight.service.SandwichService;
 import com.pluralsight.utils.console.CollectionFormatter;
@@ -13,7 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class AddCustomSandwichScreen {
-    private final IMenuRepository menuRepository = MenuRepository.getInstance();
+    private final MenuRepository menuRepository = FileMenuRepository.getInstance();
     private final SandwichService sandwichService = new SandwichService();
 
     public void addCustomSandwich(Order order) {

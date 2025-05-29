@@ -3,7 +3,7 @@ package com.pluralsight.ui.forms;
 import com.pluralsight.model.extras.Drink;
 import com.pluralsight.model.menu.DrinkCategory;
 import com.pluralsight.model.order.Order;
-import com.pluralsight.repository.IMenuRepository;
+import com.pluralsight.repository.FileMenuRepository;
 import com.pluralsight.repository.MenuRepository;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
@@ -12,7 +12,7 @@ import com.pluralsight.utils.console.ScreenUtils;
 import java.util.List;
 
 public class AddDrinkScreen {
-    private final IMenuRepository menuRepository = MenuRepository.getInstance();
+    private final MenuRepository menuRepository = FileMenuRepository.getInstance();
 
     public void addDrink(Order order) {
 

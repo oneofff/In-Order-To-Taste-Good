@@ -3,7 +3,7 @@ package com.pluralsight.ui.forms;
 import com.pluralsight.model.sandwich.RegularTopping;
 import com.pluralsight.model.sandwich.Sandwich;
 import com.pluralsight.model.sandwich.SignatureSandwich;
-import com.pluralsight.repository.IMenuRepository;
+import com.pluralsight.repository.FileMenuRepository;
 import com.pluralsight.repository.MenuRepository;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class AddRegularToppingsScreen {
 
-    private final IMenuRepository menuRepository = MenuRepository.getInstance();
+    private final MenuRepository menuRepository = FileMenuRepository.getInstance();
 
     public void addRegularToppings(Sandwich sandwich) {
         List<RegularTopping> availableRegularToppings = new LinkedList<>(menuRepository.getRegularToppings());

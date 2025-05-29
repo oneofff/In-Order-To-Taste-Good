@@ -2,7 +2,7 @@ package com.pluralsight.ui.forms;
 
 import com.pluralsight.model.order.Order;
 import com.pluralsight.model.sandwich.SignatureSandwich;
-import com.pluralsight.repository.IMenuRepository;
+import com.pluralsight.repository.FileMenuRepository;
 import com.pluralsight.repository.MenuRepository;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class AddSignatureSandwichScreen {
 
-    private final IMenuRepository menuRepository = MenuRepository.getInstance();
+    private final MenuRepository menuRepository = FileMenuRepository.getInstance();
 
 
     public void addSignatureSandwich(Order order) {

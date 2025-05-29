@@ -9,6 +9,7 @@ import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class AddCustomSandwichScreen {
@@ -80,6 +81,8 @@ public class AddCustomSandwichScreen {
     private String selectSandwichSize() {
         ScreenUtils.printOnCenterOfTheScreen("Please select sandwich size: ");
         List<String> toDisplay = CollectionFormatter.mapToIndexedList(menuRepository.getCustomSandwichPricesBySize());
+        //sort the list to display
+        toDisplay.sort(Comparator.comparingInt(s -> Integer.parseInt(s.replaceAll("\\D+", ""))));
         ScreenUtils.printBox(toDisplay);
         int size = ConsoleStringReader.getIntInRangeOfCollection(toDisplay, false);
         String sizeName = menuRepository.getCustomSandwichPricesBySize().keySet().toArray()[size - 1].toString();

@@ -8,14 +8,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.SortedMap;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
 public class Menu {
     private List<String> sandwichAvailableModificationTypes;
     private List<SignatureSandwich> signatureSandwiches;
-    private SortedMap<String, Double> customSandwichSizePrices;
+    private Map<String, Double> customSandwichSizePrices;
     private List<String> breadOptions;
     private List<PremiumToppingsCategory> premiumToppingsCategories;
     private List<RegularTopping> regularToppings;

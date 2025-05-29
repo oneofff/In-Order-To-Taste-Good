@@ -38,10 +38,6 @@ public class Order {
         items.add(item);
     }
 
-    public void removeItem(OrderItem item) {
-        items.remove(item);
-    }
-
     public List<String> getOrderRepresentation() {
         List<String> details = new LinkedList<>();
         details.add("Your order:");
@@ -67,12 +63,11 @@ public class Order {
     }
 
     public String getCheckRepresentation() {
-        String sb = "Order Date: " + orderDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' h:mma")) + "\n" +
+        return "Order Date: " + orderDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' h:mma")) + "\n" +
                 String.join("\n", getOrderRepresentation()) +
                 "\n" +
                 "Gratuity: $" + gratuity + "\n" +
                 "Tax (" + TAX_RATE * 100 + "%): $" + getTaxAmount() + "\n" +
                 "Total Price: $" + getTotalPrice() + "\n";
-        return sb;
     }
 }

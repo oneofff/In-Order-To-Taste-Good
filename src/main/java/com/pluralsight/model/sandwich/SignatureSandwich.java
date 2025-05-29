@@ -15,7 +15,6 @@ public class SignatureSandwich extends Sandwich {
     private List<Sauce> includedSauces;
 
 
-
     @Override
     protected List<PremiumTopping> getAllPremiumToppings() {
         List<PremiumTopping> allPremium = new LinkedList<>();
@@ -38,6 +37,17 @@ public class SignatureSandwich extends Sandwich {
         if (includedSauces != null) allSauces.addAll(includedSauces);
         if (getSauces() != null) allSauces.addAll(getSauces());
         return allSauces;
+    }
+
+    @Override
+    public void removeTopping(Topping topping) {
+        super.removeTopping(topping);
+        if (includedPremiumToppings != null) {
+            includedPremiumToppings.removeIf(t -> t.getName().equals(topping.getName()));
+        }
+        if (includedRegularToppings != null) {
+            includedRegularToppings.removeIf(t -> t.getName().equals(topping.getName()));
+        }
     }
 
 }

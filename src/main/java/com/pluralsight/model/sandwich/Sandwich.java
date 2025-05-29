@@ -37,7 +37,7 @@ public abstract class Sandwich extends OrderItem {
             for (var entry : categorizedToppings.entrySet()) {
                 representation.add(" ".repeat(4) + entry.getKey() + ":");
                 for (PremiumTopping topping : entry.getValue()) {
-                    representation.add(" ".repeat(4) + topping.getRepresentation());
+                    representation.add(getItemRepresentation(topping.getRepresentation()));
                 }
             }
         }
@@ -51,7 +51,7 @@ public abstract class Sandwich extends OrderItem {
         if (getAllRegularToppings() != null && !getAllRegularToppings().isEmpty()) {
             representation.add("Regular Toppings:");
             for (RegularTopping topping : getAllRegularToppings()) {
-                representation.add(" ".repeat(4) + "- " + topping.getName());
+                representation.add(getItemRepresentation(topping.getRepresentation()));
             }
         }
 
@@ -59,7 +59,7 @@ public abstract class Sandwich extends OrderItem {
         if (getAllSauces() != null && !getAllSauces().isEmpty()) {
             representation.add("Sauces:");
             for (var sauce : getAllSauces()) {
-                representation.add(" ".repeat(4) + "- " + sauce.getName());
+                representation.add(getItemRepresentation(sauce.getName()));
             }
 
         }
@@ -72,8 +72,11 @@ public abstract class Sandwich extends OrderItem {
                                 getPremiumToppingsTotalPrice(),
                                 getTotalPrice())));
 
-
         return representation;
+    }
+
+    private static String getItemRepresentation(String string) {
+        return " ".repeat(4) + "- " + string;
     }
 
     @Override
@@ -155,5 +158,20 @@ public abstract class Sandwich extends OrderItem {
 
     protected List<Sauce> getAllSauces() {
         return getSauces();
+    }
+
+    public List<Topping> getAllToppings() {
+        List<Topping> allToppings = new LinkedList<>();
+        allToppings.addAll(getAllPremiumToppings());
+        allToppings.addAll(getAllRegularToppings());
+        return allToppings;
+    }
+
+    public void removeTopping(Topping selectedTopping) {
+        if (selectedTopping instanceof PremiumTopping premiumTopping) {
+            getPremiumToppings().removeIf(t -> t.getName().equals(premiumTopping.getName()));
+        } else if (selectedTopping instanceof RegularTopping regularTopping) {
+            getRegularToppings().removeIf(t -> t.getName().equals(regularTopping.getName()));
+        }
     }
 }

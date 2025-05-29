@@ -7,6 +7,7 @@ import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class AddModificationScreen {
@@ -16,31 +17,35 @@ public class AddModificationScreen {
     public void addModification(Sandwich sandwich) {
         boolean running = true;
         while (running) {
-            printModificationMenu(sandwich.getShortRepresentation());
-            int modificationType = getModificationType();
+            List<String> modificationMenu = printModificationMenu(sandwich.getShortRepresentation());
+            int modificationType = getModificationType(modificationMenu);
             switch (modificationType) {
                 case 1 -> new AddPremiumToppingsScreen().addPremiumToppings(sandwich);
                 case 2 -> new AddRegularToppingsScreen().addRegularToppings(sandwich);
-                case 3 -> new AddSaucesScreen().addSauces(sandwich);
+                case 3 -> new RemoveToppingsScreen().removeToppings(sandwich);
+                case 4 -> new AddSaucesScreen().addSauces(sandwich);
                 case 0 -> running = false;
                 default -> ScreenUtils.printOnCenterOfTheScreen("Invalid option selected.");
             }
         }
     }
 
-    private int getModificationType() {
+    private int getModificationType(List<String> modificationMenu) {
         int modificationType = ConsoleStringReader.getIntInRangeOfCollection(
-                menuRepository.getSandwichAvailableModificationTypes(), true
+                modificationMenu, true
         );
         ScreenUtils.cls();
         return modificationType;
     }
 
-    private void printModificationMenu(List<String> sandwichRepresentation) {
+    private List<String> printModificationMenu(List<String> sandwichRepresentation) {
         ScreenUtils.printOnCenterOfTheScreen("Please select your modifications");
-        ScreenUtils.printBox(CollectionFormatter.listToMenu(
-                menuRepository.getSandwichAvailableModificationTypes(), String::format,
+        List<String> modificationOptions = new LinkedList<>(menuRepository.getSandwichAvailableModificationTypes());
+        modificationOptions.add(2, "Remove Toppings");
+        ScreenUtils.printBox(CollectionFormatter.listToMenu(modificationOptions
+                , String::format,
                 "Finish Modifications"
         ), sandwichRepresentation);
+        return modificationOptions;
     }
 }

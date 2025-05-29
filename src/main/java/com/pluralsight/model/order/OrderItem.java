@@ -29,7 +29,7 @@ public abstract class OrderItem implements Comparable<OrderItem> {
     public int compareTo(OrderItem other) {
         int typeCompare = Integer.compare(this.getSortOrder(), other.getSortOrder());
         if (typeCompare == 0) {
-            return Integer.compare(System.identityHashCode(this), System.identityHashCode(other));
+            return Integer.compare(this.hashCode(), other.hashCode());
         }
         return typeCompare;
     }

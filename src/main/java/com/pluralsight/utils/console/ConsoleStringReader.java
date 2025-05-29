@@ -1,6 +1,5 @@
 package com.pluralsight.utils.console;
 
-import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -55,22 +54,5 @@ public final class ConsoleStringReader {
     public static String getStringWithMargin() {
         ScreenUtils.printWithMargins("");
         return scanner.nextLine();
-    }
-
-    public static LocalDate getDateWithMargin() {
-        LocalDate date;
-        while (true) {
-            try {
-                ScreenUtils.printWithMargins("");
-                String stringDate = scanner.nextLine();
-                if (stringDate.isEmpty()) {
-                    return null;
-                }
-                date = LocalDate.parse(stringDate);
-                return date;
-            } catch (Exception e) {
-                ScreenUtils.printlnWithMargins("Invalid input. Please enter a valid date in the format yyyy-MM-dd.");
-            }
-        }
     }
 }

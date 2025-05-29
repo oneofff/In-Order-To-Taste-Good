@@ -17,62 +17,116 @@ public abstract class Sandwich extends OrderItem {
     private String bread;
     private double basePrice;
     private boolean isToasted;
-
-
     private List<PremiumTopping> premiumToppings = new LinkedList<>();
     private List<RegularTopping> regularToppings = new LinkedList<>();
     private List<Sauce> sauces = new LinkedList<>();
 
     public List<String> getRepresentation() {
         List<String> representation = new LinkedList<>();
-        representation.add("Sandwich: " + getName());
-        representation.add("Sandwich Size: " + getSize() + " - $" + getBasePrice());
-        representation.add("Bread: " + getBread() + (isToasted() ? " Toasted" : ""));
 
-        if (getAllPremiumToppings() != null && !getAllPremiumToppings().isEmpty()) {
-            representation.add("");
-            representation.add("Premium Toppings:");
-            Map<String, List<PremiumTopping>> categorizedToppings = getAllPremiumToppings().stream()
-                    .collect(Collectors.groupingBy(PremiumTopping::getCategory));
-            for (var entry : categorizedToppings.entrySet()) {
-                representation.add(" ".repeat(4) + entry.getKey() + ":");
-                for (PremiumTopping topping : entry.getValue()) {
-                    representation.add(getItemRepresentation(topping.getRepresentation()));
-                }
-            }
-        }
+        addIfNotEmpty(representation, getMainSandwichInfo());
 
-        if (getPremiumToppings() != null && !getPremiumToppings().isEmpty()) {
-            representation.add("");
-            representation.add("Total Premium Toppings Price: $" + getPremiumToppingsTotalPrice());
-            representation.add("");
-        }
+        addIfNotEmpty(representation, addPremiumToppingsInfo());
 
-        if (getAllRegularToppings() != null && !getAllRegularToppings().isEmpty()) {
-            representation.add("Regular Toppings:");
-            for (RegularTopping topping : getAllRegularToppings()) {
-                representation.add(getItemRepresentation(topping.getRepresentation()));
-            }
-        }
+        addIfNotEmpty(representation, getRegularToppingsInfo());
 
+        addIfNotEmpty(representation, getSaucesInfo());
 
-        if (getAllSauces() != null && !getAllSauces().isEmpty()) {
-            representation.add("Sauces:");
-            for (var sauce : getAllSauces()) {
-                representation.add(getItemRepresentation(sauce.getName()));
-            }
-
-        }
-
-        representation.add("");
-        representation.add(String.format("Total Price: $%.2f%s",
-                getBasePrice(),
-                getPremiumToppingsTotalPrice() == 0.0 ? "" :
-                        String.format(" + $%.2f  = %.2f",
-                                getPremiumToppingsTotalPrice(),
-                                getTotalPrice())));
+        addIfNotEmpty(representation, getPriceInfo());
 
         return representation;
+    }
+
+    private void addIfNotEmpty(List<String> representation, List<String> strings) {
+        if (strings != null && !strings.isEmpty()) {
+            representation.addAll(strings);
+        }
+    }
+
+    private void addIfNotEmpty(List<String> representation, String string) {
+        if (string != null && !string.isEmpty()) {
+            representation.add(string);
+        }
+    }
+
+    private String getPriceInfo() {
+        double basePrice = getBasePrice();
+        double toppingsPrice = getPremiumToppingsTotalPrice();
+        double totalPrice = getTotalPrice();
+
+        return (toppingsPrice == 0.0)
+                ? String.format("Total Price: $%.2f", basePrice)
+                : String.format("Total Price: $%.2f + $%.2f = $%.2f",
+                basePrice, toppingsPrice, totalPrice);
+    }
+
+    private List<String> getSaucesInfo() {
+        if (getAllSauces() == null || getAllSauces().isEmpty())
+            return List.of();
+
+        List<String> saucesInfo = new LinkedList<>();
+
+        saucesInfo.add("Sauces:");
+        for (var sauce : getAllSauces()) {
+            saucesInfo.add(getItemRepresentation(sauce.getName()));
+        }
+        saucesInfo.add("");
+        return saucesInfo;
+    }
+
+    private List<String> getRegularToppingsInfo() {
+        if (getAllRegularToppings() == null || getAllRegularToppings().isEmpty())
+            return List.of();
+
+        List<String> regularToppingsInfo = new LinkedList<>();
+
+        regularToppingsInfo.add("Regular Toppings:");
+        for (RegularTopping topping : getAllRegularToppings()) {
+            regularToppingsInfo.add(getItemRepresentation(topping.getRepresentation()));
+        }
+        regularToppingsInfo.add("");
+        return regularToppingsInfo;
+    }
+
+    private List<String> addPremiumToppingsInfo() {
+        if (getAllPremiumToppings() == null || getAllPremiumToppings().isEmpty())
+            return List.of();
+
+        List<String> premiumToppingsInfo = new LinkedList<>();
+
+        premiumToppingsInfo.add("Premium Toppings:");
+
+        Map<String, List<PremiumTopping>> categorizedToppings = getCategorizedToppings();
+        premiumToppingsInfo.addAll(buildPremiumToppingsLines(categorizedToppings));
+
+        premiumToppingsInfo.add("");
+        premiumToppingsInfo.add("Total Premium Toppings Price: $" + getPremiumToppingsTotalPrice());
+        premiumToppingsInfo.add("");
+
+        return premiumToppingsInfo;
+    }
+
+    private List<String> buildPremiumToppingsLines(Map<String, List<PremiumTopping>> categorizedToppings) {
+        List<String> premiumToppingsInfo = new LinkedList<>();
+        for (var entry : categorizedToppings.entrySet()) {
+            premiumToppingsInfo.add(" ".repeat(4) + entry.getKey() + ":");
+            for (PremiumTopping topping : entry.getValue()) {
+                premiumToppingsInfo.add(getItemRepresentation(topping.getRepresentation()));
+            }
+        }
+        return premiumToppingsInfo;
+    }
+
+    private Map<String, List<PremiumTopping>> getCategorizedToppings() {
+        return getAllPremiumToppings().stream()
+                .collect(Collectors.groupingBy(PremiumTopping::getCategory));
+    }
+
+    private List<String> getMainSandwichInfo() {
+        return List.of("Sandwich: " + getName(),
+                "Sandwich Size: " + getSize() + " - $" + getBasePrice(),
+                "Bread: " + getBread() + (isToasted() ? " Toasted" : ""),
+                "");
     }
 
     private static String getItemRepresentation(String string) {
@@ -81,47 +135,65 @@ public abstract class Sandwich extends OrderItem {
 
     @Override
     public List<String> getShortRepresentation() {
-        List<String> out = new LinkedList<>();
+        List<String> shortRepresentation = new LinkedList<>();
 
-        out.add("Sandwich: " + getName() + " - " + getSize());
+        addIfNotEmpty(shortRepresentation, getShortMainSandwichInfo());
 
+        addIfNotEmpty(shortRepresentation, getShortBreadInfo());
 
-        out.add(String.format("Bread: %s, %s",
+        addIfNotEmpty(shortRepresentation, getShortPremiumToppingsInfo());
+
+        addIfNotEmpty(shortRepresentation, getShortRegularToppingsInfo());
+
+        addIfNotEmpty(shortRepresentation, getShortSauceInfo());
+
+        addIfNotEmpty(shortRepresentation, getShortPriceInfo());
+
+        return shortRepresentation;
+    }
+
+    private String getShortPriceInfo() {
+        return String.format("Price: $%.2f", getTotalPrice());
+    }
+
+    private String getShortSauceInfo() {
+        if (getAllSauces() == null || getAllSauces().isEmpty()) return "";
+        return "Sauces: " + getAllSauces().stream()
+                .map(Sauce::getName)
+                .collect(Collectors.joining(", "));
+    }
+
+    private String getShortRegularToppingsInfo() {
+        if (getAllRegularToppings() == null || getAllRegularToppings().isEmpty()) return "";
+
+        return "Regular: " + getAllRegularToppings().stream()
+                .map(RegularTopping::getName)
+                .collect(Collectors.joining(", "));
+    }
+
+    private String getShortPremiumToppingsInfo() {
+        if (getAllPremiumToppings() == null || getAllPremiumToppings().isEmpty()) return "";
+
+        String shortPremiumToppingsInfo = getAllPremiumToppings().stream()
+                .map(t -> t.getName() + (t.isExtra() ? "(+)" : ""))
+                .collect(Collectors.joining(", "));
+        return "Premium: " + shortPremiumToppingsInfo;
+    }
+
+    private String getShortBreadInfo() {
+        return String.format("Bread: %s, %s",
                 getBread(),
-                isToasted() ? " Toasted" : ""));
+                isToasted() ? " Toasted" : "");
+    }
 
-
-        if (getAllPremiumToppings() != null && !getAllPremiumToppings().isEmpty()) {
-            String prem = getAllPremiumToppings().stream()
-                    .map(t -> t.getName() + (t.isExtra() ? "(+)" : ""))
-                    .collect(Collectors.joining(", "));
-            out.add("Premium: " + prem);
-        }
-
-        if (getAllRegularToppings() != null && !getAllRegularToppings().isEmpty()) {
-            String reg = getAllRegularToppings().stream()
-                    .map(RegularTopping::getName)
-                    .collect(Collectors.joining(", "));
-            out.add("Regular: " + reg);
-        }
-
-
-        if (getAllSauces() != null && !getAllSauces().isEmpty()) {
-            String sau = getAllSauces().stream()
-                    .map(Sauce::getName)
-                    .collect(Collectors.joining(", "));
-            out.add("Sauces: " + sau);
-        }
-
-        out.add(String.format("Price: $%.2f", getTotalPrice()));
-
-        return out;
+    private String getShortMainSandwichInfo() {
+        return "Sandwich: " + getName() + " - " + getSize();
     }
 
     public void addPremiumTopping(PremiumTopping topping) {
-        if (getPremiumToppings() == null)
+        if (this.premiumToppings == null)
             setPremiumToppings(new LinkedList<>());
-        getPremiumToppings().add(topping);
+        this.premiumToppings.add(topping);
     }
 
     public double getTotalPrice() {
@@ -148,30 +220,24 @@ public abstract class Sandwich extends OrderItem {
         getSauces().add(sauce);
     }
 
-    protected List<PremiumTopping> getAllPremiumToppings() {
-        return getPremiumToppings();
-    }
-
-    protected List<RegularTopping> getAllRegularToppings() {
-        return getRegularToppings();
-    }
-
-    protected List<Sauce> getAllSauces() {
-        return getSauces();
-    }
-
-    public List<Topping> getAllToppings() {
-        List<Topping> allToppings = new LinkedList<>();
-        allToppings.addAll(getAllPremiumToppings());
-        allToppings.addAll(getAllRegularToppings());
-        return allToppings;
-    }
-
     public void removeTopping(Topping selectedTopping) {
         if (selectedTopping instanceof PremiumTopping premiumTopping) {
             getPremiumToppings().removeIf(t -> t.getName().equals(premiumTopping.getName()));
         } else if (selectedTopping instanceof RegularTopping regularTopping) {
             getRegularToppings().removeIf(t -> t.getName().equals(regularTopping.getName()));
         }
+    }
+
+    protected abstract List<PremiumTopping> getAllPremiumToppings();
+
+    protected abstract List<RegularTopping> getAllRegularToppings();
+
+    protected abstract List<Sauce> getAllSauces();
+
+    public List<Topping> getAllToppings() {
+        List<Topping> allToppings = new LinkedList<>();
+        allToppings.addAll(getAllPremiumToppings());
+        allToppings.addAll(getAllRegularToppings());
+        return allToppings;
     }
 }

@@ -56,18 +56,26 @@ public class Order {
         representation.add("Order Checkout:");
         representation.add("-".repeat(20));
         representation.addAll(getOrderRepresentation());
-        representation.add(String.format("Gratuity: $%.2f", gratuity));
-        representation.add(String.format("Tax (%.2f%%): $%.2f", TAX_RATE * 100, getTaxAmount()));
-        representation.add(String.format("Total Price: $%.2f", getTotalPrice()));
+        representation.addAll(getCostRepresentation());
         return representation;
+    }
+
+    private List<String> getCostRepresentation() {
+        return List.of(
+                String.format("Gratuity (%.2f%%): $%.2f", getGratuityPercentage(), gratuity),
+                String.format("Tax (%.2f%%): $%.2f", TAX_RATE * 100, getTaxAmount()),
+                String.format("Total Price: $%.2f", getTotalPrice())
+        );
+    }
+
+    private double getGratuityPercentage() {
+        return Math.round(gratuity / getPriceWithTaxes() * 100);
     }
 
     public String getCheckRepresentation() {
         return "Order Date: " + orderDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy 'at' h:mma")) + "\n" +
                 String.join("\n", getOrderRepresentation()) +
                 "\n" +
-                "Gratuity: $" + gratuity + "\n" +
-                "Tax (" + TAX_RATE * 100 + "%): $" + getTaxAmount() + "\n" +
-                "Total Price: $" + getTotalPrice() + "\n";
+                String.join("\n", getCostRepresentation());
     }
 }

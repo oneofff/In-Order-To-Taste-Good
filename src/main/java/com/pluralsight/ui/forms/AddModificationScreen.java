@@ -22,8 +22,8 @@ public class AddModificationScreen {
             switch (modificationType) {
                 case 1 -> new AddPremiumToppingsScreen().addPremiumToppings(sandwich);
                 case 2 -> new AddRegularToppingsScreen().addRegularToppings(sandwich);
-                case 3 -> new RemoveToppingsScreen().removeToppings(sandwich);
-                case 4 -> new AddSaucesScreen().addSauces(sandwich);
+                case 3 -> new AddSaucesScreen().addSauces(sandwich);
+                case 4 -> new RemoveToppingsScreen().removeToppings(sandwich);
                 case 0 -> running = false;
                 default -> ScreenUtils.printOnCenterOfTheScreen("Invalid option selected.");
             }
@@ -41,7 +41,7 @@ public class AddModificationScreen {
     private List<String> printModificationMenu(List<String> sandwichRepresentation) {
         ScreenUtils.printOnCenterOfTheScreen("Please select your modifications");
         List<String> modificationOptions = new LinkedList<>(menuRepository.getSandwichAvailableModificationTypes());
-        modificationOptions.add(2, "Remove Toppings");
+        modificationOptions.add("Remove Toppings");
         ScreenUtils.printBox(CollectionFormatter.listToMenu(modificationOptions
                 , String::format,
                 "Finish Modifications"

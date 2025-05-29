@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegularTopping extends Topping {
 
-
-
     @Override
     protected double getTotalPrice() {
         return getBasePrice();

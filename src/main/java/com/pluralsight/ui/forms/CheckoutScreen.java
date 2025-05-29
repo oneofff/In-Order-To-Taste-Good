@@ -27,8 +27,8 @@ public class CheckoutScreen {
         ScreenUtils.cls();
         ScreenUtils.printOnCenterOfTheScreen("Checkout:");
         ScreenUtils.printBox(order.getOrderRepresentation());
-        ScreenUtils.printOnCenterOfTheScreen("Enter gratuity amount: ");
-        double gratuity = ConsoleStringReader.getPositiveDoubleWithMargin();
+        ScreenUtils.printOnCenterOfTheScreen("Please enter a gratuity (e.g. 3.50 or 20%).");
+        double gratuity = getGratuity(order.getPriceWithTaxes());
         order.setGratuity(gratuity);
         ScreenUtils.cls();
         ScreenUtils.printBox(order.getOrderCheckoutRepresentation());
@@ -48,6 +48,39 @@ public class CheckoutScreen {
             ScreenUtils.cls();
         } else {
             ScreenUtils.printOnCenterOfTheScreen("Order cancelled. You can continue shopping.");
+        }
+    }
+
+    private static double getGratuity(double priceWithTaxes) {
+        while (true) {
+            String raw = ConsoleStringReader.getStringWithMargin().trim();
+
+            if (raw.isEmpty()) {
+                ScreenUtils.printOnCenterOfTheScreen("Please enter a gratuity (e.g. 3.50 or 20%).");
+                continue;
+            }
+
+            boolean percentInput = raw.endsWith("%");
+            String numericPart = percentInput
+                    ? raw.substring(0, raw.length() - 1).trim()
+                    : raw;
+
+            try {
+                double value = Double.parseDouble(numericPart);
+                if (value < 0) {
+                    ScreenUtils.printOnCenterOfTheScreen("Gratuity cannot be negative.");
+                    continue;
+                }
+
+                double gratuity = percentInput
+                        ? priceWithTaxes * value / 100.0
+                        : value;
+
+                return Math.round(gratuity * 100.0) / 100.0;
+
+            } catch (NumberFormatException ex) {
+                ScreenUtils.printOnCenterOfTheScreen("Invalid number format. Try again.");
+            }
         }
     }
 }

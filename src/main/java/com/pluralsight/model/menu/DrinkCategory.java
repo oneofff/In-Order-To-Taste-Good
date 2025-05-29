@@ -8,5 +8,4 @@ import java.util.Map;
 public class DrinkCategory {
     private String name;
     private Map<String, Double> sizePrices = Map.of();
-
 }

@@ -19,7 +19,7 @@ public class PremiumTopping extends Topping {
 
     public String getRepresentation() {
         return String.format("%s, %s %s",
-                getName(), isExtra ? "Extra" : "Regular", getTotalPrice() == 0.0 ? "" : String.format(" -$%.2f", getTotalPrice()));
+                getName(), isExtra ? "Extra" : "Regular", getTotalPrice() == 0.0 ? "" : String.format(" - $%.2f", getTotalPrice()));
     }
 
     public double getTotalPrice() {

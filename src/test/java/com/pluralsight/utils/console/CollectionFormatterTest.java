@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 class CollectionFormatterTest {
 
-
     @Test
     @DisplayName("mapToIndexedList() returns 1-based numbered lines in insertion order")
     void testMapToIndexedList() {
@@ -33,10 +32,6 @@ class CollectionFormatterTest {
         );
         assertIterableEquals(expected, actual, "Lines should match expected numbering and formatting");
     }
-
-    /* ------------------------------------------------------------------
-     * listToMenu (with exit option)
-     * ------------------------------------------------------------------ */
 
     @Test
     @DisplayName("listToMenu() adds a 0-exit choice and numbers the rest")

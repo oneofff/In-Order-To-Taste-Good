@@ -14,7 +14,6 @@ class ConsoleStringReaderTest {
 
     private InputStream originalIn;
 
-
     private void setInput(String data) {
         originalIn = System.in;
         System.setIn(new ByteArrayInputStream(data.getBytes()));

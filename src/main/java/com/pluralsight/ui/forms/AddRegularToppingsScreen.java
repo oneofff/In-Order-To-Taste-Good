@@ -26,8 +26,6 @@ public class AddRegularToppingsScreen {
             if (regularTopping != null) sandwich.addRegularTopping(regularTopping);
             else break;
         }
-
-
     }
 
     private RegularTopping addRegularToppingFlow(List<RegularTopping> availableRegularToppings, Sandwich sandwich) {

@@ -19,7 +19,6 @@ public class AddSaucesScreen {
         List<Sauce> sauces = new LinkedList<>(menuService.getSauces());
         removeAlreadyAddedSauces(sauces, sandwich);
 
-
         while (!sauces.isEmpty()) {
             printAvailableSauces(sauces, sandwich.getShortRepresentation());
             Sauce selectedSauce = getSelectedSauce(sauces);

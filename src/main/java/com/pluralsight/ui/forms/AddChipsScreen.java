@@ -14,27 +14,50 @@ public class AddChipsScreen {
     private final MenuService menuService = new DefaultMenuService();
 
     public void addChips(Order order) {
-
-        List<Chips> chipsOptions = menuService.getChipsOptions();
-
-        if (chipsOptions == null || chipsOptions.isEmpty()) {
-            ScreenUtils.printOnCenterOfTheScreen(
-                    "Sorry, no chips are available at the moment.");
-            ScreenUtils.waitTillPressEnter();
-            ScreenUtils.cls();
+        List<Chips> options = menuService.getChipsOptions();
+        if (isEmpty(options)) {
+            showUnavailable();
             return;
         }
 
+        Chips selected = promptSelection(options);
+        boolean added = promptConfirmation(selected);
+
+        if (added) {
+            order.addItem(selected);
+            displayAdded(selected, order);
+        } else {
+            displayCancelled(selected);
+        }
+
+        ScreenUtils.waitTillPressEnter();
+        ScreenUtils.cls();
+    }
+
+    private boolean isEmpty(List<Chips> options) {
+        return options == null || options.isEmpty();
+    }
+
+    private void showUnavailable() {
+        ScreenUtils.printOnCenterOfTheScreen("Sorry, no chips are available at the moment.");
+        ScreenUtils.waitTillPressEnter();
+        ScreenUtils.cls();
+    }
+
+    private Chips promptSelection(List<Chips> options) {
         ScreenUtils.printOnCenterOfTheScreen("Choose chips to add:");
         ScreenUtils.printBox(CollectionFormatter.listToMenu(
-                chipsOptions,
+                options,
                 c -> String.format("%s - $%.2f", c.getName(), c.getPrice())
         ));
 
-        int choice = ConsoleStringReader.getIntInRangeOfCollection(chipsOptions, false);
-        Chips selected = chipsOptions.get(choice - 1);
+        int choice = ConsoleStringReader.getIntInRangeOfCollection(options, false);
+        Chips selected = options.get(choice - 1);
         ScreenUtils.cls();
+        return selected;
+    }
 
+    private boolean promptConfirmation(Chips selected) {
         ScreenUtils.printBox(List.of(
                 "Chips: " + selected.getName(),
                 String.format("Price: $%.2f", selected.getPrice())
@@ -44,18 +67,19 @@ public class AddChipsScreen {
 
         int confirm = ConsoleStringReader.getIntInRangeWithMargin(1, 2);
         ScreenUtils.cls();
+        return confirm == 1;
+    }
 
-        if (confirm == 1) {
-            order.addItem(selected);
-            ScreenUtils.printOnCenterOfTheScreen(
-                    String.format("%s chips added successfully!", selected.getName()));
-            ScreenUtils.printBox(order.getOrderRepresentation());
-        } else {
-            ScreenUtils.printOnCenterOfTheScreen(
-                    String.format("%s chips were not added.", selected.getName()));
-        }
+    private void displayAdded(Chips selected, Order order) {
+        ScreenUtils.printOnCenterOfTheScreen(
+                String.format("%s chips added successfully!", selected.getName())
+        );
+        ScreenUtils.printBox(order.getOrderRepresentation());
+    }
 
-        ScreenUtils.waitTillPressEnter();
-        ScreenUtils.cls();
+    private void displayCancelled(Chips selected) {
+        ScreenUtils.printOnCenterOfTheScreen(
+                String.format("%s chips were not added.", selected.getName())
+        );
     }
 }

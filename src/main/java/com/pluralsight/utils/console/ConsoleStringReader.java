@@ -6,26 +6,7 @@ import java.util.Scanner;
 
 public final class ConsoleStringReader {
 
-    public static final Scanner scanner = new Scanner(System.in);
-
-    public static double getPositiveDoubleWithMargin() {
-        double value;
-        while (true) {
-            try {
-                ScreenUtils.printWithMargins("");
-                value = scanner.nextDouble();
-                scanner.nextLine();
-                if (value <= 0) {
-                    ScreenUtils.printlnWithMargins("Invalid input. Value should be greater than 0.");
-                    continue;
-                }
-                return value;
-            } catch (InputMismatchException e) {
-                ScreenUtils.printlnWithMargins("Invalid input. Please enter a numeric value greater than 0.");
-                scanner.nextLine();
-            }
-        }
-    }
+    public static Scanner scanner = new Scanner(System.in);
 
     public static int getIntInRangeWithMargin(int rangeStart, int rangeEnd) {
         int value;

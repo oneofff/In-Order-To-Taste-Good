@@ -1,0 +1,18 @@
+Order Date: 05/30/2025 at 8:07 AM
+Your order:
+----------
+Sandwich: Custom Sandwich - 4inch
+Bread: Wheat,  Toasted
+Premium: American(+), Steak(+)
+Regular: Lettuce, Tomato
+Sauces: Mayo, Mustard
+Price: $8.05
+----------
+Sprite  Large - $3.00
+----------
+Pringles Original - $1.50
+----------
+Price: 12.55
+Gratuity (20.00%): $2.63
+Tax (4.75%): $0.60
+Total Price: $15.78

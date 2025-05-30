@@ -1,0 +1,11 @@
+Order Date: 05/30/2025 at 8:21 AM
+Your order:
+----------
+Sprite  Small - $2.00
+----------
+Lay's Classic - $1.50
+----------
+Price: 3.50
+Gratuity (30.00%): $1.10
+Tax (4.75%): $0.17
+Total Price: $4.77

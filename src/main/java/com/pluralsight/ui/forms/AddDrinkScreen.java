@@ -3,8 +3,8 @@ package com.pluralsight.ui.forms;
 import com.pluralsight.model.extras.Drink;
 import com.pluralsight.model.menu.DrinkCategory;
 import com.pluralsight.model.order.Order;
-import com.pluralsight.repository.FileMenuRepository;
-import com.pluralsight.repository.MenuRepository;
+import com.pluralsight.service.DefaultMenuService;
+import com.pluralsight.service.interfaces.MenuService;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -12,11 +12,11 @@ import com.pluralsight.utils.console.ScreenUtils;
 import java.util.List;
 
 public class AddDrinkScreen {
-    private final MenuRepository menuRepository = FileMenuRepository.getInstance();
+    private final MenuService menuService = new DefaultMenuService();
 
     public void addDrink(Order order) {
 
-        List<DrinkCategory> drinkOptions = menuRepository.getDrinkOptions();
+        List<DrinkCategory> drinkOptions = menuService.getDrinkOptions();
 
         if (drinkOptions == null || drinkOptions.isEmpty()) {
             ScreenUtils.printOnCenterOfTheScreen("Sorry, no drinks are available at the moment.");

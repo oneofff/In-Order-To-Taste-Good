@@ -1,8 +1,8 @@
 package com.pluralsight.ui.forms;
 
 import com.pluralsight.model.sandwich.Sandwich;
-import com.pluralsight.repository.FileMenuRepository;
-import com.pluralsight.repository.MenuRepository;
+import com.pluralsight.service.DefaultMenuService;
+import com.pluralsight.service.interfaces.MenuService;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -11,8 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class AddModificationScreen {
-
-    private final MenuRepository menuRepository = FileMenuRepository.getInstance();
+    private final MenuService menuService = new DefaultMenuService();
 
     public void addModification(Sandwich sandwich) {
         boolean running = true;
@@ -40,7 +39,7 @@ public class AddModificationScreen {
 
     private List<String> printModificationMenu(List<String> sandwichRepresentation) {
         ScreenUtils.printOnCenterOfTheScreen("Please select your modifications");
-        List<String> modificationOptions = new LinkedList<>(menuRepository.getSandwichAvailableModificationTypes());
+        List<String> modificationOptions = new LinkedList<>(menuService.getSandwichAvailableModificationTypes());
         modificationOptions.add("Remove Toppings");
         ScreenUtils.printBox(CollectionFormatter.listToMenu(modificationOptions
                 , String::format,

@@ -2,8 +2,8 @@ package com.pluralsight.ui.forms;
 
 import com.pluralsight.model.extras.Chips;
 import com.pluralsight.model.order.Order;
-import com.pluralsight.repository.FileMenuRepository;
-import com.pluralsight.repository.MenuRepository;
+import com.pluralsight.service.DefaultMenuService;
+import com.pluralsight.service.interfaces.MenuService;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -11,12 +11,11 @@ import com.pluralsight.utils.console.ScreenUtils;
 import java.util.List;
 
 public class AddChipsScreen {
+    private final MenuService menuService = new DefaultMenuService();
 
-    private static final MenuRepository menuRepository = FileMenuRepository.getInstance();
+    public void addChips(Order order) {
 
-    public static void addChips(Order order) {
-
-        List<Chips> chipsOptions = menuRepository.getChipsOptions();
+        List<Chips> chipsOptions = menuService.getChipsOptions();
 
         if (chipsOptions == null || chipsOptions.isEmpty()) {
             ScreenUtils.printOnCenterOfTheScreen(

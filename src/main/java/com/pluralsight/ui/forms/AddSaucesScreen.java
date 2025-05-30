@@ -3,8 +3,8 @@ package com.pluralsight.ui.forms;
 import com.pluralsight.model.sandwich.Sandwich;
 import com.pluralsight.model.sandwich.Sauce;
 import com.pluralsight.model.sandwich.SignatureSandwich;
-import com.pluralsight.repository.FileMenuRepository;
-import com.pluralsight.repository.MenuRepository;
+import com.pluralsight.service.DefaultMenuService;
+import com.pluralsight.service.interfaces.MenuService;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -13,10 +13,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class AddSaucesScreen {
-    private final MenuRepository menuRepository = FileMenuRepository.getInstance();
+    private final MenuService menuService = new DefaultMenuService();
 
     public void addSauces(Sandwich sandwich) {
-        List<Sauce> sauces = new LinkedList<>(menuRepository.getSauces());
+        List<Sauce> sauces = new LinkedList<>(menuService.getSauces());
         removeAlreadyAddedSauces(sauces, sandwich);
 
 

@@ -1,7 +1,8 @@
 package com.pluralsight.ui.forms;
 
 import com.pluralsight.model.order.Order;
-import com.pluralsight.service.OrderService;
+import com.pluralsight.service.DefaultOrderService;
+import com.pluralsight.service.interfaces.OrderService;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
 
@@ -10,8 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class CheckoutScreen {
-
-    private final OrderService orderService = new OrderService();
+    private final OrderService orderService = new DefaultOrderService();
 
     public void checkout(Order order) {
         if (order == null || order.getItems().isEmpty()) {

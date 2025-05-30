@@ -4,8 +4,8 @@ import com.pluralsight.model.menu.PremiumToppingsCategory;
 import com.pluralsight.model.sandwich.PremiumTopping;
 import com.pluralsight.model.sandwich.Sandwich;
 import com.pluralsight.model.sandwich.SignatureSandwich;
-import com.pluralsight.repository.FileMenuRepository;
-import com.pluralsight.repository.MenuRepository;
+import com.pluralsight.service.DefaultMenuService;
+import com.pluralsight.service.interfaces.MenuService;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -15,11 +15,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class AddPremiumToppingsScreen {
-
-    private final MenuRepository menuRepository = FileMenuRepository.getInstance();
+    private final MenuService menuService = new DefaultMenuService();
 
     public void addPremiumToppings(Sandwich sandwich) {
-        var availablePremiumToppingsCategories = new LinkedList<>(menuRepository.getPremiumToppingsCategories());
+        var availablePremiumToppingsCategories = new LinkedList<>(menuService.getPremiumToppingsCategories());
 
         removeAlreadyAddedToppings(availablePremiumToppingsCategories, sandwich);
 

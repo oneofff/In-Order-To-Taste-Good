@@ -2,9 +2,10 @@ package com.pluralsight.ui.forms;
 
 import com.pluralsight.model.order.Order;
 import com.pluralsight.model.sandwich.CustomSandwich;
-import com.pluralsight.repository.FileMenuRepository;
-import com.pluralsight.repository.MenuRepository;
-import com.pluralsight.service.SandwichService;
+import com.pluralsight.service.DefaultMenuService;
+import com.pluralsight.service.DefaultSandwichService;
+import com.pluralsight.service.interfaces.MenuService;
+import com.pluralsight.service.interfaces.SandwichService;
 import com.pluralsight.utils.console.CollectionFormatter;
 import com.pluralsight.utils.console.ConsoleStringReader;
 import com.pluralsight.utils.console.ScreenUtils;
@@ -13,8 +14,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public class AddCustomSandwichScreen {
-    private final MenuRepository menuRepository = FileMenuRepository.getInstance();
-    private final SandwichService sandwichService = new SandwichService();
+    private final SandwichService sandwichService = new DefaultSandwichService();
+    private final MenuService menuService = new DefaultMenuService();
 
     public void addCustomSandwich(Order order) {
         CustomSandwich sandwich = buildSandwich();
@@ -37,7 +38,7 @@ public class AddCustomSandwichScreen {
         CustomSandwich sandwich = new CustomSandwich();
         sandwich.setName("Custom Sandwich");
         sandwich.setSize(selectSandwichSize());
-        sandwich.setBasePrice(menuRepository.getCustomSandwichPricesBySize().get(sandwich.getSize()));
+        sandwich.setBasePrice(menuService.getCustomSandwichPricesBySize().get(sandwich.getSize()));
         sandwich.setBread(selectBread());
         sandwich.setToasted(getIsToasted());
 
@@ -70,22 +71,22 @@ public class AddCustomSandwichScreen {
     private String selectBread() {
         ScreenUtils.printOnCenterOfTheScreen("Please select your bread");
         ScreenUtils.printBox(CollectionFormatter.listToMenu(
-                menuRepository.getBreadOptions(),
+                menuService.getBreadOptions(),
                 (bread) -> String.format("%s", bread)
         ));
-        int breadType = ConsoleStringReader.getIntInRangeOfCollection(menuRepository.getBreadOptions(), false);
+        int breadType = ConsoleStringReader.getIntInRangeOfCollection(menuService.getBreadOptions(), false);
         ScreenUtils.cls();
-        return menuRepository.getBreadOptions().get(breadType - 1);
+        return menuService.getBreadOptions().get(breadType - 1);
     }
 
     private String selectSandwichSize() {
         ScreenUtils.printOnCenterOfTheScreen("Please select sandwich size: ");
-        List<String> toDisplay = CollectionFormatter.mapToIndexedList(menuRepository.getCustomSandwichPricesBySize());
+        List<String> toDisplay = CollectionFormatter.mapToIndexedList(menuService.getCustomSandwichPricesBySize());
         //sort the list to display
         toDisplay.sort(Comparator.comparingInt(s -> Integer.parseInt(s.replaceAll("\\D+", ""))));
         ScreenUtils.printBox(toDisplay);
         int size = ConsoleStringReader.getIntInRangeOfCollection(toDisplay, false);
-        String sizeName = menuRepository.getCustomSandwichPricesBySize().keySet().toArray()[size - 1].toString();
+        String sizeName = menuService.getCustomSandwichPricesBySize().keySet().toArray()[size - 1].toString();
         ScreenUtils.cls();
         return sizeName;
     }

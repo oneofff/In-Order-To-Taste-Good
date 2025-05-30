@@ -48,8 +48,6 @@ and allows for checkout.
 
     * **Customizable Menu:** The menu can be easily extended with new items by modifying the data/menu.json file.
 
-    * **Error Handling:** Robust error handling for invalid inputs and edge cases.
-
     * **Unit Tests:** Basic unit tests for critical components to ensure reliability.
 
     * **Console Interface:** User-friendly menu system for navigation and data entry.

@@ -3,18 +3,20 @@ package com.pluralsight.utils.console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class CollectionFormatter {
 
     public static <T, L> List<String> mapToIndexedList(Map<T, L> sizes) {
-        AtomicInteger idx = new AtomicInteger(1);
-        return sizes.entrySet().stream()
-                .map(e -> String.format("%d. %s $%.2f",
-                        idx.getAndIncrement(),
-                        e.getKey(), e.getValue()))
+        List<Map.Entry<T, L>> entries = new ArrayList<>(sizes.entrySet());
+
+        return IntStream.range(0, entries.size())
+                .mapToObj(i -> {
+                    Map.Entry<T, L> e = entries.get(i);
+                    return String.format("%d. %s $%.2f", i + 1, e.getKey(), e.getValue());
+                })
                 .collect(Collectors.toList());
     }
 

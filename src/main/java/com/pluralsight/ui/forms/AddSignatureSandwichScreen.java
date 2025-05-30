@@ -13,7 +13,6 @@ import java.util.List;
 public class AddSignatureSandwichScreen {
     private final MenuService menuService = new DefaultMenuService();
 
-
     public void addSignatureSandwich(Order order) {
         List<SignatureSandwich> menu = menuService.getSignatureSandwiches();
         if (!menuAvailable(menu)) return;
@@ -59,13 +58,11 @@ public class AddSignatureSandwichScreen {
                     "Signature sandwich '" + picked.getName() + "' added.");
         } else {
             showNotAddedMessage(picked);
-
         }
         ScreenUtils.printBox(order.getOrderRepresentation());
         ScreenUtils.waitTillPressEnter();
         ScreenUtils.cls();
     }
-
 
     private boolean confirmAddToOrder(SignatureSandwich sandwich) {
         ScreenUtils.printOnCenterOfTheScreen("Your signature sandwich");

@@ -10,8 +10,11 @@ import com.pluralsight.repository.FileMenuRepository;
 import com.pluralsight.repository.MenuRepository;
 import com.pluralsight.service.interfaces.MenuService;
 
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class DefaultMenuService implements MenuService {
     private final MenuRepository menuRepository = FileMenuRepository.getInstance();
@@ -58,6 +61,16 @@ public class DefaultMenuService implements MenuService {
 
     @Override
     public Map<String, Double> getCustomSandwichPricesBySize() {
-        return menuRepository.getCustomSandwichPricesBySize();
+        Map<String, Double> raw = menuRepository.getCustomSandwichPricesBySize();
+        return raw.entrySet().stream()
+                .sorted(Comparator.comparingInt(e ->
+                        Integer.parseInt(e.getKey().replaceAll("\\D+", ""))
+                ))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (a, b) -> a,
+                        LinkedHashMap::new
+                ));
     }
 } 

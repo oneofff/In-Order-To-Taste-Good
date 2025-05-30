@@ -14,6 +14,7 @@ Guidance provided by Pluralsight instructor [Craig McKeachie](https://www.linked
 - [Project Description](#project-description)
 - [Features](#features)
 - [How it Works](#how-it-works)
+  - [Class Diagram](#class-diagram)
 - [Application Screens (Console Output Examples)](#application-screens-console-output-examples)
 - [Interesting Code Snippet](#interesting-code-snippet)
 - [Running the Application](#running-the-application)
@@ -75,6 +76,132 @@ the reading and writing of menu and order data, respectively. The menu.json file
 Model Layer `com.pluralsight.model`: Defines the data structures for various entities
 like `Order`, `OrderItem`, `Sandwich`,
 `CustomSandwich`, `SignatureSandwich`, `Drink`, `Chips`, `Menu` and etc.
+
+### Class Diagram
+
+```mermaid
+classDiagram
+  direction LR
+
+  class Order {
+    +LocalDateTime orderDate
+    +SortedSet~OrderItem~ items
+    +double gratuity
+    +double TAX_RATE
+    +getPriceWithTaxes() double
+    +getPriceWithoutTax() double
+    +getTaxAmount() double
+    +getTotalPrice() double
+    +addItem(OrderItem) void
+    +getOrderRepresentation() List~String~
+    +getOrderCheckoutRepresentation() List~String~
+    +getCheckRepresentation() String
+  }
+
+  class OrderItem {
+    <<Abstract>>
+    +getRepresentation() List~String~
+    +getShortRepresentation() List~String~
+    +getTotalPrice() double
+    +compareTo(OrderItem) int
+  }
+
+  class Sandwich {
+    <<Abstract>>
+    +String name
+    +String size
+    +String bread
+    +double basePrice
+    +boolean isToasted
+    +List~PremiumTopping~ premiumToppings
+    +List~RegularTopping~ regularToppings
+    +List~Sauce~ sauces
+    +getTotalPrice() double
+    +addPremiumTopping(PremiumTopping) void
+    +addRegularTopping(RegularTopping) void
+    +addSauce(Sauce) void
+    +removeTopping(Topping) void
+    +getAllToppings() List~Topping~
+    +getRepresentation() List~String~
+    +getShortRepresentation() List~String~
+    #getAllPremiumToppings() List~PremiumTopping~
+    #getAllRegularToppings() List~RegularTopping~
+    #getAllSauces() List~Sauce~
+    #getPremiumToppingsTotalPrice() double
+  }
+
+  class CustomSandwich {
+    #getAllPremiumToppings() List~PremiumTopping~
+    #getAllRegularToppings() List~RegularTopping~
+    #getAllSauces() List~Sauce~
+  }
+
+  class SignatureSandwich {
+    +List~RegularTopping~ includedRegularToppings
+    +List~PremiumTopping~ includedPremiumToppings
+    +List~Sauce~ includedSauces
+    +removeTopping(Topping) void
+    #getAllPremiumToppings() List~PremiumTopping~
+    #getAllRegularToppings() List~RegularTopping~
+    #getAllSauces() List~Sauce~
+  }
+
+  class Drink {
+    +String name
+    +String size
+    +double price
+    +getTotalPrice() double
+    +getRepresentation() List~String~
+    +getShortRepresentation() List~String~
+  }
+
+  class Chips {
+    +String name
+    +double price
+    +getTotalPrice() double
+    +getRepresentation() List~String~
+    +getShortRepresentation() List~String~
+  }
+
+  class Topping {
+    <<Abstract>>
+    +String name
+    +double basePrice
+    #getTotalPrice() double
+    +getRepresentation() String
+  }
+
+  class PremiumTopping {
+    +String category
+    +double extraPrice
+    +String size
+    +boolean isExtra
+    +getTotalPrice() double
+    +getRepresentation() String
+  }
+
+  class RegularTopping {
+    +getTotalPrice() double
+    +getRepresentation() String
+  }
+
+  class Sauce {
+    +String name
+    +double price
+    +getRepresentation() String
+  }
+
+  Order "1" *-- "0..*" OrderItem: contains
+  OrderItem <|-- Sandwich
+  OrderItem <|-- Drink
+  OrderItem <|-- Chips
+  Sandwich <|-- CustomSandwich
+  Sandwich <|-- SignatureSandwich
+  Sandwich "1" *-- "0..*" Topping: has
+  Sandwich "1" *-- "0..*" Sauce: has
+  Topping <|-- PremiumTopping
+  Topping <|-- RegularTopping
+```
 
 Utilities `com.pluralsight.utils`: Provides helper functions for console I/O `ScreenUtils`, `ConsoleStringReader`,
 `CollectionFormatter`, and file handling `FileWriterUtils`.

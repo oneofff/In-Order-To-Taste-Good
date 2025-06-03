@@ -60,7 +60,6 @@ and allows for checkout.
 ## How it Works
 
 The application uses a layered structure:
-The application uses a layered structure, similar to the "The Balancing Act" application:
 
 UI Layer `com.pluralsight.ui`: Handles console input and output, displaying menus, prompting for user input, and
 displaying formatted data. Key menu screens include `HomeScreenMenu`, `OrderScreenMenu`, and `AddSandwichScreenMenu`.
